@@ -21,22 +21,16 @@ library(DESeq2)
 library(readr)
 library(dplyr)
 
-# Read data
 df <- read.table("all_expression.txt", header = TRUE, sep = "\t", check.names = FALSE)
-
-# Prepare count matrix
-count_data <- df[, 2:7]
+count_data <- df[, 2:7] # columns 2 to 7 contain read counts
 rownames(count_data) <- df$`Gene ID`
-
-# Set sample info
 sample_info <- data.frame(condition = factor(c(rep("Control", 3), rep("Treat", 3))))
 rownames(sample_info) <- colnames(count_data)
 
-# DESeq2 pipeline
 dds <- DESeqDataSetFromMatrix(countData = round(count_data),
                               colData = sample_info,
                               design = ~ condition)
-dds <- dds[rowSums(counts(dds)) > 1, ]
+dds <- dds[rowSums(counts(dds)) > 1, ] # the threshold for low-expression filtering depends on the dataset
 dds <- DESeq(dds)
 res <- results(dds)
 res <- res[order(res$padj), ]
