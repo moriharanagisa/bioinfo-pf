@@ -1,6 +1,6 @@
 # RNA-seq Data Visualization using R
 
-This workflow demonstrates how to analyze RNA-seq expression data using **DESeq2**, and visualize the results through a **volcano plot**, **PCA**, and **heatmaps**.  
+This workflow demonstrates how to analyze RNA-seq expression data using **DESeq2**, <br>and visualize the results through a **volcano plot**, **PCA**, and **heatmaps**.  
 The input file should contain raw read counts along with gene annotations.
 
 ---
