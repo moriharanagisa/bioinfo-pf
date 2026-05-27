@@ -46,22 +46,28 @@ res_df <- transform(as.data.frame(res), GeneID = row.names(res))
 gene_annotation <- setNames(df[, c("Gene ID", "Gene Symbol")], c("GeneID", "GeneSymbol"))
 res_df <- merge(res_df, gene_annotation, by = "GeneID")
 res_df <- na.omit(res_df)
-res_df$threshold <- ifelse(res_df$padj < 1E-50 & abs(res_df$log2FoldChange) > 2, "Significant", "Not Significant")
-label_df <- subset(res_df, threshold == "Significant")
+
+res_df$threshold <- ifelse(res_df$padj < 1E-50 & res_df$log2FoldChange > 2, "Up",
+                    ifelse(res_df$padj < 1E-50 & res_df$log2FoldChange < -2, "Down", "NS"))
+
+top10 <- rbind(
+  head(res_df[res_df$threshold == "Up",   ][order(res_df[res_df$threshold == "Up",   ]$padj), ], 5),
+  head(res_df[res_df$threshold == "Down", ][order(res_df[res_df$threshold == "Down", ]$padj), ], 5)
+)
 
 p <- ggplot(res_df, aes(x = log2FoldChange, y = -log10(padj), color = threshold)) +
   geom_point(alpha = 0.6, size = 2) +
-  scale_color_manual(values = c("Not Significant" = "gray", "Significant" = "red")) +
-  geom_text_repel(data = label_df, aes(label = GeneSymbol), size = 3, max.overlaps = 20, show.legend = FALSE) +
+  scale_color_manual(values = c("Up" = "red", "Down" = "blue", "NS" = "gray")) +
+  geom_text_repel(data = top10, aes(label = GeneSymbol), size = 3, show.legend = FALSE) +
   theme_bw() +
-  labs(x = "log2 Fold Change", y = "-log10 Adjusted p-value") +
-  theme(legend.title = element_blank(), legend.text = element_text(size = 10))
+  labs(x = "log2 Fold Change", y = "-log10 Adjusted p-value")
 
 png("volcano_plot.png", width = 6, height = 5, units = "in", res = 300)
 print(p)
 dev.off()
 ```
-<img width="1800" height="1500" alt="volcano_plot" src="https://github.com/user-attachments/assets/201017b1-6dee-480d-a88d-cdd70688d407" />
+<img width="1800" height="1500" alt="volcano_plot" src="https://github.com/user-attachments/assets/f8d87384-a89c-429c-a4d6-ff9a2fe3c241" />
+
 
 ##  PCA Plot
 
