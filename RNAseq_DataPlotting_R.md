@@ -97,6 +97,7 @@ dev.off()
 ```r
 library(pheatmap)
 
+label_df <- subset(res_df, threshold != "NS")
 vsd_sig_matrix <- assay(vsd)[intersect(label_df$GeneID, rownames(assay(vsd))), , drop = FALSE]
 rownames(vsd_sig_matrix) <- setNames(gene_annotation$GeneSymbol, gene_annotation$GeneID)[rownames(vsd_sig_matrix)]
 
@@ -115,6 +116,7 @@ pheatmap(vsd_sig_matrix,
          clustering_distance_cols = "euclidean")
 dev.off()
 ```
-<img width="1000" height="800" alt="SignificantGenes_Heatmap" src="https://github.com/user-attachments/assets/a9f2d67e-56c4-46d2-b43b-8b3c74c0051a" />
-<img width="1000" height="800" alt="SignificantGenes_Heatmap_scaled" src="https://github.com/user-attachments/assets/b239b86e-6703-4f7c-b345-3e434b73cfb3" />
+<img width="500" height="800" alt="SignificantGenes_Heatmap" src="https://github.com/user-attachments/assets/45e7fca2-7e36-4c03-829c-84da1aacdd21" />
+<img width="500" height="800" alt="SignificantGenes_Heatmap_scaled" src="https://github.com/user-attachments/assets/239deb01-3bef-4d8e-b000-7e33c6acf520" />
+
 
