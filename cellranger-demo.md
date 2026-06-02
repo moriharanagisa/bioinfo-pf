@@ -1,6 +1,6 @@
 # Cell Ranger Test Run Tutorial
 
-## 1. Download Cell Ranger
+## 1. Download Cell Ranger & Reference
 
 Open the Cell Ranger download page:
 
