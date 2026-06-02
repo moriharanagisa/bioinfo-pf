@@ -6,10 +6,9 @@ Open the Cell Ranger download page:
 
 [Cell Ranger Downloads](https://www.10xgenomics.com/support/jp/software/cell-ranger/downloads?utm_source=chatgpt.com#download-links)
 
-1. Select the desired Cell Ranger version.
-2. Under **"tar.gz compression"**, Select the **wget** tab.
-3. Click **Copy** to copy the download command.
-4. Paste the command into the terminal and execute it.
+1. Under **"tar.gz compression"**, Select the **wget** tab.
+2. Click **Copy** to copy the download command.
+3. Paste the command into the terminal and execute it.
 
 ## 2. Extract Cell Ranger
 
