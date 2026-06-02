@@ -6,33 +6,26 @@ Open the Cell Ranger download page:
 
 [Cell Ranger Downloads](https://www.10xgenomics.com/support/jp/software/cell-ranger/downloads?utm_source=chatgpt.com#download-links)
 
+Cell Ranger 10.0.0
 1. Under **"tar.gz compression"**, Select the **wget** tab.
 2. Click **Copy** to copy the download command.
 3. Paste the command into the terminal and execute it.
 
-## 2. Extract Cell Ranger
+References
+1. Under Human reference (GRCh38) - 2024-A, Select the **wget** tab.
+2. Click **Copy** to copy the download command.
+3. Paste the command into the terminal and execute it.
+
+## 2. Extract Cell Ranger & Reference
 
 ```bash
 tar -xzvf cellranger-10.0.0.tar.gz
 ```
-
----
-
-## 3. Download Human Reference Genome
-
-```bash
-wget "https://cf.10xgenomics.com/supp/cell-exp/refdata-gex-GRCh38-2024-A.tar.gz"
-```
-
-## 4. Extract Reference Files
-
 ```bash
 tar -xzvf refdata-gex-GRCh38-2024-A.tar.gz
 ```
 
----
-
-## 5. Add Cell Ranger to PATH
+## 3. Add Cell Ranger to PATH
 
 > This command must be executed again after each new login session.
 
@@ -42,7 +35,7 @@ export PATH=/DATA/cfam000*/cellranger-10.0.0:$PATH
 
 ---
 
-## 6. Verify Installation
+## 4. Verify Installation
 
 ```bash
 cellranger testrun --id=check_install
@@ -50,7 +43,7 @@ cellranger testrun --id=check_install
 
 ---
 
-## 7. Download Example Dataset
+## 5. Download Example Dataset
 
 Browse available datasets:
 
@@ -64,7 +57,7 @@ wget https://s3-us-west-2.amazonaws.com/10x.files/samples/cell-exp/4.0.0/SC3_v3_
 
 ---
 
-## 8. Extract FASTQ Files
+## 6. Extract FASTQ Files
 
 ```bash
 tar -xvf SC3_v3_NextGem_SI_PBMC_10K_fastqs.tar
@@ -72,7 +65,7 @@ tar -xvf SC3_v3_NextGem_SI_PBMC_10K_fastqs.tar
 
 ---
 
-## 9. Reduce Dataset Size for Testing
+## 7. Reduce Dataset Size for Testing
 
 > Remove lanes 3 and 4 to shorten runtime and reduce resource usage.
 
@@ -83,7 +76,7 @@ rm -f SC3_v3_NextGem_SI_PBMC_10K_fastqs*L003* \
 
 ---
 
-## 10. Run Cell Ranger Count
+## 8. Run Cell Ranger Count
 
 ```bash
 cellranger count \
@@ -108,7 +101,7 @@ cellranger count \
 
 ---
 
-## 11. Download Results to Local Computer
+## 9. Download Results to Local Computer
 
 Open a new PowerShell or Terminal window and run:
 
@@ -118,7 +111,7 @@ scp -r cfam0001@133.41.125.54:/DATA/cfam0001/pbmc/outs/ .
 
 ---
 
-## 12. Review QC Metrics
+## 10. Review QC Metrics
 
 Open:
 
