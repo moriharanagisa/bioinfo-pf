@@ -37,7 +37,7 @@ tar -xzvf refdata-gex-GRCh38-2024-A.tar.gz
 > This command must be executed again after each new login session.
 
 ```bash
-export PATH=/DATA/cfam0001/cellranger-10.0.0:$PATH
+export PATH=/DATA/cfam000*/cellranger-10.0.0:$PATH
 ```
 
 ---
