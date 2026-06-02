@@ -11,7 +11,7 @@ Cell Ranger 10.0.0
 2. Click **Copy** to copy the download command.
 3. Paste the command into the terminal and execute it.
 
-References
+Reference
 1. Under Human reference (GRCh38) - 2024-A, Select the **wget** tab.
 2. Click **Copy** to copy the download command.
 3. Paste the command into the terminal and execute it.
