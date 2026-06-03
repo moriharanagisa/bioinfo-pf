@@ -97,7 +97,7 @@ cellranger count \
 
 ---
 
-## 9. Download Results to Local Computer
+## 8. Download Results to Local Computer
 
 Open a new PowerShell or Terminal window and run:
 
@@ -110,7 +110,7 @@ scp -r cfam0001@133.41.125.54:/DATA/cfam000*/donor2/outs/ donor2
 
 ---
 
-## 10. Review QC Metrics
+## 9. Review QC Metrics
 
 Open:
 
