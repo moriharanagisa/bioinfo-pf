@@ -83,7 +83,6 @@ cellranger count \
     --localcores=32 \
     --localmem=128
 ```
----
 ### Parameters
 
 | Parameter            | Description                         |
