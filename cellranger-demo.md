@@ -101,10 +101,10 @@ cellranger count \
 Open a new PowerShell or Terminal window and run:
 
 ```bash
-scp -r cfam0001@133.41.125.54:/DATA/cfam000*/donor1/outs/ donor1
+scp -r cfam000*@133.41.125.54:/DATA/cfam000*/donor1/outs/ donor1
 ```
 ```bash
-scp -r cfam0001@133.41.125.54:/DATA/cfam000*/donor2/outs/ donor2
+scp -r cfam000*@133.41.125.54:/DATA/cfam000*/donor2/outs/ donor2
 ```
 
 ---
