@@ -131,7 +131,7 @@ list_sct <- PrepSCTIntegration( object.list = list_sct, anchor.features = featur
 anchors_sct <- FindIntegrationAnchors( object.list = list_sct, anchor.features = features, normalization.method = "SCT")
 ```
 ```r
-combined_sct <- IntegrateData( anchorset = anchors_sct, normalization.method = "SCT")
+combined <- IntegrateData( anchorset = anchors_sct, normalization.method = "SCT")
 ```
 ### Save R Data (optional)
 ```r
@@ -141,10 +141,10 @@ save(combined, file = "combined.RData")
 
 ## 8. PCA and UMAP
 ```r
-combined_sct <- RunPCA(combined_sct, verbose = FALSE)
+combined <- RunPCA(combined, verbose = FALSE)
 ```
 ```r
-p <- ElbowPlot(combined_sct, ndims = 15)
+p <- ElbowPlot(combined, ndims = 15)
 ggsave("ElbowPlot.pdf", p)
 ```
 Open a new terminal:
@@ -152,9 +152,9 @@ Open a new terminal:
 scp cfam0001@133.41.125.54:/DATA/cfam000*/ElbowPlot.pdf .
 ```
 ```r
-combined_sct <- RunUMAP( combined_sct, reduction = "pca", dims = 1:10)
-combined_sct <- FindNeighbors( combined_sct, reduction = "pca", dims = 1:10)
-combined_sct <- FindClusters( combined_sct, graph.name = "integrated_snn", resolution = 0.5)
+combined <- RunUMAP( combined, reduction = "pca", dims = 1:10)
+combined <- FindNeighbors( combined, reduction = "pca", dims = 1:10)
+combined <- FindClusters( combined, graph.name = "integrated_snn", resolution = 0.5)
 ```
 ---
 
