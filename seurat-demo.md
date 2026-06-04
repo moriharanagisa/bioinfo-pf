@@ -78,8 +78,6 @@ donor2 <- CreateSeuratObject(
 
 ## 5. Quality Control (QC)
 
-## Calculate QC Metrics
-
 ```r
 donor1[["percent.mt"]] <- PercentageFeatureSet(donor1, pattern = "^MT-")
 donor2[["percent.mt"]] <- PercentageFeatureSet(donor2, pattern = "^MT-")
@@ -167,7 +165,7 @@ donor2 <- subset(
 
 ## 7. Dataset Integration
 
-## Select Integration Features
+### Select Integration Features
 
 ```r
 list_sct <- c(donor1, donor2)
@@ -181,7 +179,7 @@ list_sct <- PrepSCTIntegration(
   anchor.features = features
 )
 ```
-## Find Anchors
+### Find Anchors
 
 ```r
 anchors_sct <- FindIntegrationAnchors(
@@ -190,7 +188,7 @@ anchors_sct <- FindIntegrationAnchors(
   normalization.method = "SCT"
 )
 ```
-## Integrate Datasets
+### Integrate Datasets
 
 ```r
 combined_sct <- IntegrateData(
@@ -201,7 +199,7 @@ combined_sct <- IntegrateData(
 ---
 
 ## 8. PCA and UMAP
-## PCA
+### PCA
 
 ```r
 combined_sct <- RunPCA(
@@ -209,7 +207,7 @@ combined_sct <- RunPCA(
   verbose = FALSE
 )
 ```
-## Elbow Plot
+### Elbow Plot
 
 ```r
 p <- ElbowPlot(combined_sct, ndims = 15)
@@ -220,7 +218,7 @@ Open a new terminal:
 ```bash
 scp cfam0001@133.41.125.54:/DATA/cfam000*/ElbowPlot.pdf .
 ```
-## UMAP and Clustering
+### UMAP and Clustering
 ```r
 combined <- RunUMAP(
   combined,
@@ -240,7 +238,7 @@ combined <- FindClusters(
 ```
 ---
 
-# Save Intermediate Object
+## Save Intermediate Object
 
 ```r
 save(combined, file = "combined.RData")
@@ -249,7 +247,7 @@ save(combined, file = "combined.RData")
 
 ## 9. Cell Type Annotation with ScType
 
-## Load ScType Functions
+### Load ScType Functions
 
 ```r
 source(
