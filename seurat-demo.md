@@ -231,6 +231,7 @@ ggsave("UMAP_sctype_split.pdf", p5, width = 16, height = 10)
 ## 10. Identify conserved cell type markers
 
 ```r
+combined[["RNA"]] <- JoinLayers(combined[["RNA"]])
 Idents(combined) <- "sctype_classification"
 ```
 
