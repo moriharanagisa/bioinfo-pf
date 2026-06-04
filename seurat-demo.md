@@ -154,12 +154,12 @@ Open a new terminal:
 ```bash
 scp cfam0001@133.41.125.54:/DATA/cfam000*/ElbowPlot.pdf .
 ```
+<img width="751" height="740" alt="image" src="https://github.com/user-attachments/assets/813cf94a-548d-4198-9ef4-3db45988deb0" />
 ```r
 combined <- RunUMAP( combined, reduction = "pca", dims = 1:10)
 combined <- FindNeighbors( combined, reduction = "pca", dims = 1:10)
 combined <- FindClusters( combined, graph.name = "integrated_snn", resolution = 0.5)
 ```
-<img width="751" height="740" alt="image" src="https://github.com/user-attachments/assets/813cf94a-548d-4198-9ef4-3db45988deb0" />
 ---
 
 ## 9. Cell Type Annotation with ScType
