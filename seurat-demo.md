@@ -29,7 +29,7 @@ micromamba self-update
 micromamba create -n seurat -c conda-forge -c bioconda \
   r-base=4.3 r-seurat r-seuratobject r-tidyverse r-patchwork
 
-# Type Y when asked
+# Type Y and press Enter
 
 micromamba activate seurat
 
