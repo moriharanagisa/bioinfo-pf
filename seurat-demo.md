@@ -218,7 +218,7 @@ ggsave("ElbowPlot.pdf", p)
 ```
 Open a new terminal:
 ```bash
-scp cfam0001@133.41.125.54:/DATA/cfam0001/ElbowPlot.pdf .
+scp cfam0001@133.41.125.54:/DATA/cfam000*/ElbowPlot.pdf .
 ```
 ## UMAP and Clustering
 ```r
