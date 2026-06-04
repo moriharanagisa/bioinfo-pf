@@ -157,14 +157,18 @@ scp cfam0001@133.41.125.54:/DATA/cfam000*/ElbowPlot.pdf .
 <img width="751" height="740" alt="image" src="https://github.com/user-attachments/assets/813cf94a-548d-4198-9ef4-3db45988deb0" />
 
 ```r
-combined <- RunUMAP( combined, reduction = "pca", dims = 1:10)
-combined <- FindNeighbors( combined, reduction = "pca", dims = 1:10)
+combined <- RunUMAP( combined, reduction = "pca", dims = 1:8)
+combined <- FindNeighbors( combined, reduction = "pca", dims = 1:8)
 combined <- FindClusters( combined, graph.name = "integrated_snn", resolution = 0.5)
 ```
 ---
 
 ## 9. Cell Type Annotation with ScType
-
+```r
+DefaultAssay(combined) <- "RNA"
+combined <- NormalizeData(combined)
+combined <- ScaleData(combined)
+```
 ### Load ScType Functions
 
 ```r
@@ -181,7 +185,7 @@ gs_list <- gene_sets_prepare("https://raw.githubusercontent.com/IanevskiAleksand
 ### Calculate Scores
 
 ```r
-es.max <- sctype_score(scRNAseqData = combined[["SCT"]]@scale.data, scaled = TRUE, gs = gs_list$gs_positive, gs2 = gs_list$gs_negative)
+es.max <- sctype_score(scRNAseqData = combined[["RNA"]]@scale.data, scaled = TRUE, gs = gs_list$gs_positive, gs2 = gs_list$gs_negative)
 ```
 
 ### Assign Cell Types
@@ -215,7 +219,7 @@ for (j in unique(sctype_scores$cluster)) {
 
 ```r
 p4 <- DimPlot(combined, reduction = "umap", group.by = c("sctype_classification", "orig.ident"), label = TRUE, repel = TRUE)
-p5 <- DimPlot( combined, reduction = "umap", group.by = "sctype_classification", split.by = "orig.ident", label = TRUE, repel = TRUE,)
+p5 <- DimPlot( combined, reduction = "umap", group.by = "sctype_classification", split.by = "orig.ident", label = TRUE, repel = TRUE)
 ggsave("UMAP_sctype.pdf", p4, width = 16, height = 10)
 ggsave("UMAP_sctype_split.pdf", p5, width = 16, height = 10)
 ```
@@ -227,8 +231,6 @@ ggsave("UMAP_sctype_split.pdf", p5, width = 16, height = 10)
 ## 10. Identify conserved cell type markers
 
 ```r
-DefaultAssay(combined) <- "RNA"
-combined <- NormalizeData(combined, verbose = FALSE)
 Idents(combined) <- "sctype_classification"
 ```
 
