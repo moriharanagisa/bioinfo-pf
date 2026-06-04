@@ -55,8 +55,6 @@ library(patchwork)
 library(ggplot2)
 library(HGNChelper)
 library(openxlsx)
-
-set.seed(1234)
 ```
 
 ---
@@ -64,6 +62,7 @@ set.seed(1234)
 ## 4. Load Data
 
 ```r
+set.seed(1234)
 donor1.data <- Read10X(data.dir = "./donor1/outs/filtered_feature_bc_matrix/")
 donor2.data <- Read10X(data.dir = "./donor2/outs/filtered_feature_bc_matrix/")
 
