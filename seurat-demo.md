@@ -18,6 +18,8 @@
 # Prefix location? [~/micromamba]
 # /DATA/cfam000*/micromamba
 
+# relogin
+
 micromamba self-update
 ```
 
