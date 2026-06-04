@@ -275,8 +275,7 @@ for (ct in cell_types) {
   obj_ct <- subset(combined, idents = ct)
   Idents(obj_ct) <- "orig.ident"
   tryCatch({deg <- FindMarkers(obj_ct, ident.1 = "donor1", ident.2 = "donor2", min.pct = 0.25, logfc.threshold = 0.25, verbose = FALSE)
-    write.csv( deg, paste0("DEG_", gsub(" ", "_", ct), "_donor1_vs_donor2.csv"))
-　　}, error = function(e))}
+    write.csv( deg, paste0("DEG_", gsub(" ", "_", ct), "_donor1_vs_donor2.csv"))})}
 ```
 ---
 
