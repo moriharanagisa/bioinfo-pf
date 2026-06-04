@@ -60,19 +60,9 @@ set.seed(1234)
 donor1.data <- Read10X(data.dir = "./donor1/outs/filtered_feature_bc_matrix/")
 donor2.data <- Read10X(data.dir = "./donor2/outs/filtered_feature_bc_matrix/")
 
-donor1 <- CreateSeuratObject(
-  counts = donor1.data,
-  project = "donor1",
-  min.cells = 3,
-  min.features = 200
-)
+donor1 <- CreateSeuratObject( counts = donor1.data, project = "donor1", min.cells = 3, min.features = 200)
 
-donor2 <- CreateSeuratObject(
-  counts = donor2.data,
-  project = "donor2",
-  min.cells = 3,
-  min.features = 200
-)
+donor2 <- CreateSeuratObject( counts = donor2.data, project = "donor2", min.cells = 3, min.features = 200)
 ```
 ---
 
@@ -86,17 +76,9 @@ donor2[["percent.mt"]] <- PercentageFeatureSet(donor2, pattern = "^MT-")
 ### Violin Plots
 
 ```r
-vln1 <- VlnPlot(
-  donor1,
-  features = c("nFeature_RNA", "nCount_RNA", "percent.mt"),
-  ncol = 3
-)
+vln1 <- VlnPlot( donor1, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)
 
-vln2 <- VlnPlot(
-  donor2,
-  features = c("nFeature_RNA", "nCount_RNA", "percent.mt"),
-  ncol = 3
-)
+vln2 <- VlnPlot( donor2, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)
 
 ggsave("VlnPlot_QC_donor1.pdf", vln1)
 ggsave("VlnPlot_QC_donor2.pdf", vln2)
@@ -105,27 +87,11 @@ ggsave("VlnPlot_QC_donor2.pdf", vln2)
 ### Scatter Plots
 
 ```r
-scatter1 <- FeatureScatter(
-  donor1,
-  feature1 = "nCount_RNA",
-  feature2 = "percent.mt"
-) +
-  FeatureScatter(
-    donor1,
-    feature1 = "nCount_RNA",
-    feature2 = "nFeature_RNA"
-  )
+scatter1 <- FeatureScatter( donor1, feature1 = "nCount_RNA", feature2 = "percent.mt") +
+  FeatureScatter( donor1, feature1 = "nCount_RNA", feature2 = "nFeature_RNA")
 
-scatter2 <- FeatureScatter(
-  donor2,
-  feature1 = "nCount_RNA",
-  feature2 = "percent.mt"
-) +
-  FeatureScatter(
-    donor2,
-    feature1 = "nCount_RNA",
-    feature2 = "nFeature_RNA"
-  )
+scatter2 <- FeatureScatter( donor2, feature1 = "nCount_RNA", feature2 = "percent.mt") +
+  FeatureScatter( donor2, feature1 = "nCount_RNA", feature2 = "nFeature_RNA")
 
 ggsave("FeatureScatter_QC_donor1.pdf", scatter1)
 ggsave("FeatureScatter_QC_donor2.pdf", scatter2)
@@ -143,72 +109,35 @@ scp cfam0001@133.41.125.54:/DATA/cfam000*/*.pdf .
 ## 6. Cell Filtering
 
 ```r
-donor1 <- subset(
-  donor1,
-  subset =
-    nCount_RNA < 50000 &
-    nFeature_RNA > 500 &
-    nFeature_RNA < 7000 &
-    percent.mt < 10
-)
+donor1 <- subset( donor1, subset = nCount_RNA < 50000 & nFeature_RNA > 500 & nFeature_RNA < 7000 & percent.mt < 10)
 
-donor2 <- subset(
-  donor2,
-  subset =
-    nCount_RNA < 50000 &
-    nFeature_RNA > 500 &
-    nFeature_RNA < 7000 &
-    percent.mt < 10
-)
+donor2 <- subset( donor2, subset = nCount_RNA < 50000 & nFeature_RNA > 500 & nFeature_RNA < 7000 & percent.mt < 10)
 ```
 ---
 
 ## 7. Dataset Integration
-
-### Select Integration Features
-
 ```r
 list_sct <- c(donor1, donor2)
 
-features <- SelectIntegrationFeatures(
-  object.list = list_sct
-)
+features <- SelectIntegrationFeatures( object.list = list_sct)
 
-list_sct <- PrepSCTIntegration(
-  object.list = list_sct,
-  anchor.features = features
-)
+list_sct <- PrepSCTIntegration( object.list = list_sct, anchor.features = features)
 ```
-### Find Anchors
-
 ```r
-anchors_sct <- FindIntegrationAnchors(
-  object.list = list_sct,
-  anchor.features = features,
-  normalization.method = "SCT"
-)
+anchors_sct <- FindIntegrationAnchors( object.list = list_sct, anchor.features = features, normalization.method = "SCT")
 ```
-### Integrate Datasets
-
 ```r
-combined_sct <- IntegrateData(
-  anchorset = anchors_sct,
-  normalization.method = "SCT"
-)
+combined_sct <- IntegrateData( anchorset = anchors_sct, normalization.method = "SCT")
 ```
 ---
 
 ## 8. PCA and UMAP
-### PCA
-
 ```r
 combined_sct <- RunPCA(
   combined_sct,
   verbose = FALSE
 )
 ```
-### Elbow Plot
-
 ```r
 p <- ElbowPlot(combined_sct, ndims = 15)
 
@@ -218,28 +147,12 @@ Open a new terminal:
 ```bash
 scp cfam0001@133.41.125.54:/DATA/cfam000*/ElbowPlot.pdf .
 ```
-### UMAP and Clustering
 ```r
-combined <- RunUMAP(
-  combined,
-  reduction = "pca",
-  dims = 1:10
-)
-combined <- FindNeighbors(
-  combined,
-  reduction = "pca",
-  dims = 1:10
-)
-
-combined <- FindClusters(
-  combined,
-  resolution = 0.5
-)
+combined <- RunUMAP( combined, reduction = "pca", dims = 1:10)
+combined <- FindNeighbors( combined, reduction = "pca", dims = 1:10)
+combined <- FindClusters( combined, resolution = 0.5)
 ```
 ---
-
-## Save Intermediate Object
-
 ```r
 save(combined, file = "combined.RData")
 ```
@@ -250,41 +163,28 @@ save(combined, file = "combined.RData")
 ### Load ScType Functions
 
 ```r
-source(
-  "https://raw.githubusercontent.com/IanevskiAleksandr/sc-type/master/R/gene_sets_prepare.R"
-)
+source("https://raw.githubusercontent.com/IanevskiAleksandr/sc-type/master/R/gene_sets_prepare.R")
 
-source(
-  "https://raw.githubusercontent.com/IanevskiAleksandr/sc-type/master/R/sctype_score_.R"
-)
+source("https://raw.githubusercontent.com/IanevskiAleksandr/sc-type/master/R/sctype_score_.R")
 ```
 
-## Prepare Marker Database
+### Prepare Marker Database
 
 ```r
-gs_list <- gene_sets_prepare(
-  "https://raw.githubusercontent.com/IanevskiAleksandr/sc-type/master/ScTypeDB_full.xlsx",
-  "Immune system"
-)
+gs_list <- gene_sets_prepare("https://raw.githubusercontent.com/IanevskiAleksandr/sc-type/master/ScTypeDB_full.xlsx", "Immune system")
 ```
 
-## Calculate Scores
+### Calculate Scores
 
 ```r
-es.max <- sctype_score(
-  scRNAseqData = combined[["SCT"]]@scale.data,
-  scaled = TRUE,
-  gs = gs_list$gs_positive,
-  gs2 = gs_list$gs_negative
-)
+es.max <- sctype_score(scRNAseqData = combined[["SCT"]]@scale.data, scaled = TRUE, gs = gs_list$gs_positive, gs2 = gs_list$gs_negative)
 ```
 
-## Assign Cell Types
+### Assign Cell Types
 
 ```r
-cL_results <- do.call(
-  "rbind",
-  lapply(
+cL_results <- do.call("rbind",
+ lapply(
     unique(combined@meta.data$seurat_clusters),
     function(cl) {
 
@@ -319,7 +219,7 @@ sctype_scores <- cL_results %>%
   top_n(n = 1, wt = scores)
 ```
 
-## Add Annotation
+### Add Annotation
 
 ```r
 combined@meta.data$sctype_classification <- ""
@@ -336,34 +236,14 @@ for (j in unique(sctype_scores$cluster)) {
 }
 ```
 
-## Visualize
+### Visualize
 
 ```r
-p4 <- DimPlot(
-  combined,
-  reduction = "umap",
-  group.by = c(
-    "sctype_classification",
-    "orig.ident"
-  ),
-  label = TRUE,
-  repel = TRUE
-)
-
-p5 <- DimPlot(
-  combined,
-  reduction = "umap",
-  group.by = "sctype_classification",
-  split.by = "orig.ident",
-  label = TRUE,
-  repel = TRUE,
-)
-
+p4 <- DimPlot(combined, reduction = "umap", group.by = c("sctype_classification", "orig.ident"), label = TRUE, repel = TRUE)
+p5 <- DimPlot( combined, reduction = "umap", group.by = "sctype_classification", split.by = "orig.ident", label = TRUE, repel = TRUE,)
 ggsave("UMAP_sctype.pdf", p4)
-
 ggsave("UMAP_sctype_split.pdf", p5)
 ```
-
 ---
 
 ## 10. Differential Expression Analysis
@@ -387,71 +267,29 @@ write.csv(all_markers, "all_markers.csv", row.names = FALSE)
 ## Top 5 Markers
 
 ```r
-top5 <- all_markers %>%
-  group_by(cluster) %>%
-  top_n(n = 5, wt = avg_log2FC)
+top5 <- all_markers %>% group_by(cluster) %>% top_n(n = 5, wt = avg_log2FC)
 ```
 
 ---
 
-## 11. Dot Plot
+## 11. Visualization
 
 ```r
 p_dot <- DotPlot(combined, features = unique(top5$gene)) + RotatedAxis()
-
 ggsave("DotPlot_top5.pdf", p_dot)
 ```
----
-
-## 12. Violin Plot
-
 ```r
-pbmc_markers <- c(
-  "CD3D", "CD4", "CD8A",
-  "CD19", "MS4A1",
-  "CD14", "LYZ",
-  "GNLY", "NKG7",
-  "FCER1A", "CST3"
-)
-
-p_vln <- VlnPlot(
-  combined,
-  features = pbmc_markers,
-  group.by = "sctype_classification",
-  pt.size = 0,
-  ncol = 4
-)
-
-ggsave(
-  "VlnPlot_markers.pdf",
-  p_vln,
-  width = 16,
-  height = 10
-)
+pbmc_markers <- c("CD3D", "CD4", "CD8A", "CD19", "MS4A1", "CD14", "LYZ", "GNLY", "NKG7", "FCER1A", "CST3")
+p_vln <- VlnPlot(combined, features = pbmc_markers, group.by = "sctype_classification", pt.size = 0, ncol = 4)
+ggsave("VlnPlot_markers.pdf", p_vln)
 ```
-
----
-
-## 13. Feature Plot
-
 ```r
-p_feat <- FeaturePlot(
-  combined,
-  features = pbmc_markers,
-  ncol = 4
-)
-
-ggsave(
-  "FeaturePlot_markers.pdf",
-  p_feat,
-  width = 16,
-  height = 10
-)
+p_feat <- FeaturePlot(combined, features = pbmc_markers, ncol = 4)
+ggsave("FeaturePlot_markers.pdf", p_feat)
 ```
-
 ---
 
-## 14. Cell Type-Specific DEG Analysis
+## 12. Cell Type-Specific DEG Analysis
 
 ```r
 Idents(combined) <- "sctype_classification"
@@ -462,16 +300,9 @@ cell_types <- unique(
 
 for (ct in cell_types) {
 
-  obj_ct <- subset(
-    combined,
-    idents = ct
-  )
-
+  obj_ct <- subset(combined, idents = ct)
   Idents(obj_ct) <- "orig.ident"
-
-  tryCatch({
-
-    deg <- FindMarkers(
+  tryCatch({deg <- FindMarkers(
       obj_ct,
       ident.1 = "donor1",
       ident.2 = "donor2",
@@ -480,8 +311,7 @@ for (ct in cell_types) {
       verbose = FALSE
     )
 
-    write.csv(
-      deg,
+    write.csv( deg,
       paste0(
         "DEG_",
         gsub(" ", "_", ct),
