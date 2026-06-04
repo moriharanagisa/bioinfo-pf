@@ -185,7 +185,7 @@ gs_list <- gene_sets_prepare("https://raw.githubusercontent.com/IanevskiAleksand
 ### Calculate Scores
 
 ```r
-es.max <- sctype_score(scRNAseqData = combined[["RNA"]]@scale.data, scaled = TRUE, gs = gs_list$gs_positive, gs2 = gs_list$gs_negative)
+es.max <- sctype_score(scRNAseqData = LayerData(combined, assay = "RNA", layer = "scale.data"), scaled = TRUE, gs = gs_list$gs_positive, gs2 = gs_list$gs_negative)
 ```
 
 ### Assign Cell Types
