@@ -7,16 +7,16 @@
 
 # When prompted:
 # Micromamba binary folder? [~/.local/bin]
-# -> /DATA/cfam000*/bin
+# /DATA/cfam000*/bin
 
 # Init shell (bash)? [Y/n]
-# -> Y
+# Y
 
 # Configure conda-forge? [Y/n]
-# -> Y
+# Y
 
 # Prefix location? [~/micromamba]
-# -> /DATA/cfam000*/micromamba
+# /DATA/cfam000*/micromamba
 
 micromamba self-update
 ```
@@ -61,7 +61,6 @@ donor1.data <- Read10X(data.dir = "./donor1/outs/filtered_feature_bc_matrix/")
 donor2.data <- Read10X(data.dir = "./donor2/outs/filtered_feature_bc_matrix/")
 
 donor1 <- CreateSeuratObject( counts = donor1.data, project = "donor1", min.cells = 3, min.features = 200)
-
 donor2 <- CreateSeuratObject( counts = donor2.data, project = "donor2", min.cells = 3, min.features = 200)
 ```
 ---
@@ -77,7 +76,6 @@ donor2[["percent.mt"]] <- PercentageFeatureSet(donor2, pattern = "^MT-")
 
 ```r
 vln1 <- VlnPlot( donor1, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)
-
 vln2 <- VlnPlot( donor2, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)
 
 ggsave("VlnPlot_QC_donor1.pdf", vln1)
