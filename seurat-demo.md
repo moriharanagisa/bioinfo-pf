@@ -54,7 +54,7 @@ set.seed(1234)
 
 ---
 
-# 4. Load Data
+## 4. Load Data
 
 ```r
 donor1.data <- Read10X(data.dir = "./donor1/outs/filtered_feature_bc_matrix/")
@@ -76,7 +76,7 @@ donor2 <- CreateSeuratObject(
 ```
 ---
 
-# 5. Quality Control (QC)
+## 5. Quality Control (QC)
 
 ## Calculate QC Metrics
 
@@ -142,7 +142,7 @@ scp cfam0001@133.41.125.54:/DATA/cfam000*/*.pdf .
 ```
 ---
 
-# 6. Cell Filtering
+## 6. Cell Filtering
 
 ```r
 donor1 <- subset(
@@ -165,7 +165,7 @@ donor2 <- subset(
 ```
 ---
 
-# 7. Dataset Integration
+## 7. Dataset Integration
 
 ## Select Integration Features
 
@@ -200,7 +200,7 @@ combined_sct <- IntegrateData(
 ```
 ---
 
-# 8. PCA and UMAP
+## 8. PCA and UMAP
 ## PCA
 
 ```r
@@ -247,7 +247,7 @@ save(combined, file = "combined.RData")
 ```
 ---
 
-# 9. Cell Type Annotation with ScType
+## 9. Cell Type Annotation with ScType
 
 ## Load ScType Functions
 
@@ -368,7 +368,7 @@ ggsave("UMAP_sctype_split.pdf", p5)
 
 ---
 
-# 10. Differential Expression Analysis
+## 10. Differential Expression Analysis
 
 ```r
 DefaultAssay(combined) <- "RNA"
@@ -396,7 +396,7 @@ top5 <- all_markers %>%
 
 ---
 
-# 11. Dot Plot
+## 11. Dot Plot
 
 ```r
 p_dot <- DotPlot(combined, features = unique(top5$gene)) + RotatedAxis()
@@ -405,7 +405,7 @@ ggsave("DotPlot_top5.pdf", p_dot)
 ```
 ---
 
-# 12. Violin Plot
+## 12. Violin Plot
 
 ```r
 pbmc_markers <- c(
@@ -434,7 +434,7 @@ ggsave(
 
 ---
 
-# 13. Feature Plot
+## 13. Feature Plot
 
 ```r
 p_feat <- FeaturePlot(
@@ -453,7 +453,7 @@ ggsave(
 
 ---
 
-# 14. Cell Type-Specific DEG Analysis
+## 14. Cell Type-Specific DEG Analysis
 
 ```r
 Idents(combined) <- "sctype_classification"
@@ -501,7 +501,7 @@ for (ct in cell_types) {
 
 ---
 
-# 15. Save Final Results
+## 15. Save Final Results
 
 ```r
 save(combined, all_markers, top5, file = "integrate.RData")
