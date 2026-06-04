@@ -251,16 +251,16 @@ top5 <- all_markers %>% group_by(cluster) %>% top_n(n = 5, wt = avg_log2FC)
 
 ```r
 p_dot <- DotPlot(combined, features = unique(top5$gene)) + RotatedAxis()
-ggsave("DotPlot_top5.pdf", p_dot)
+ggsave("DotPlot_top5.pdf", p_dot, width = 16, height = 10)
 ```
 ```r
 pbmc_markers <- c("CD3D", "CD4", "CD8A", "CD19", "MS4A1", "CD14", "LYZ", "GNLY", "NKG7", "FCER1A", "CST3")
 p_vln <- VlnPlot(combined, features = pbmc_markers, group.by = "sctype_classification", pt.size = 0, ncol = 4)
-ggsave("VlnPlot_markers.pdf", p_vln)
+ggsave("VlnPlot_markers.pdf", p_vln, width = 16, height = 10)
 ```
 ```r
 p_feat <- FeaturePlot(combined, features = pbmc_markers, ncol = 4)
-ggsave("FeaturePlot_markers.pdf", p_feat)
+ggsave("FeaturePlot_markers.pdf", p_feat, width = 16, height = 10)
 ```
 ---
 
