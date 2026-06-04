@@ -227,7 +227,7 @@ ggsave("UMAP_sctype_split.pdf", p5, width = 16, height = 10)
 
 ```r
 DefaultAssay(combined) <- "RNA"
-combined[["RNA"]] <- JoinLayers(combined[["RNA"]])
+combined <- NormalizeData(combined, verbose = FALSE)
 Idents(combined) <- "sctype_classification"
 ```
 
