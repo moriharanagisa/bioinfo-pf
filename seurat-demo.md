@@ -152,9 +152,9 @@ Open a new terminal:
 scp cfam0001@133.41.125.54:/DATA/cfam000*/ElbowPlot.pdf .
 ```
 ```r
-combined_sct <- RunUMAP( combined, reduction = "pca", dims = 1:10)
-combined_sct <- FindNeighbors( combined, reduction = "pca", dims = 1:10)
-combined_sct <- FindClusters( combined, resolution = 0.5)
+combined_sct <- RunUMAP( combined_sct, reduction = "pca", dims = 1:10)
+combined_sct <- FindNeighbors( combined_sct, reduction = "pca", dims = 1:10)
+combined_sct <- FindClusters( combined_sct, resolution = 0.5)
 ```
 ---
 
