@@ -216,7 +216,7 @@ p <- ElbowPlot(combined_sct, ndims = 15)
 
 ggsave("ElbowPlot.pdf", p)
 ```
-Download:
+Open a new terminal:
 ```bash
 scp cfam0001@133.41.125.54:/DATA/cfam0001/ElbowPlot.pdf .
 ```
