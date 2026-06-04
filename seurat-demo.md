@@ -317,6 +317,7 @@ p2 <- LabelPoints(plot = p1, points = genes.to.label2, repel = TRUE)
 
 ggsave("cluster0_scatter_top5.pdf", p2, width = 8, height = 6)
 ```
+<img width="950" height="710" alt="image" src="https://github.com/user-attachments/assets/ab3ada11-c8ac-410f-af34-4e27fdcd3408" />
 
 ```r
 genes.manual <- c("S100A9", "ETV6", "CD74", "HLA-B")
@@ -328,6 +329,8 @@ ggsave("cluster_FeaturePlot_manual.pdf", p_feat, width = 10, height = 12)
 p_vln <- VlnPlot(combined, features = genes.manual, split.by = "orig.ident", pt.size  = 0, ncol     = 2)
 ggsave("cluster_VlnPlot_manual.pdf", p_vln, width = 10, height = 12)
 ```
+<img width="472" height="762" alt="image" src="https://github.com/user-attachments/assets/e5bbf9c5-6826-4977-894e-bb60670ba4b6" />
+<img width="531" height="639" alt="image" src="https://github.com/user-attachments/assets/e8df5085-d043-46cb-a8d3-d9b23d20ed64" />
 
 ## 14. Save Final Results
 ```r
