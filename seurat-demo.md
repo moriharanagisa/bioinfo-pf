@@ -224,7 +224,7 @@ ggsave("UMAP_sctype_split.pdf", p5, width = 16, height = 10)
 
 ---
 
-## 10. Differential Expression Analysis
+## 10. Identify conserved cell type markers
 
 ```r
 DefaultAssay(combined) <- "RNA"
@@ -270,7 +270,7 @@ ggsave("FeaturePlot_markers.pdf", p_feat, width = 16, height = 10)
 
 ---
 
-## 12. Cell Type-Specific DEG Analysis
+## 12. DEG Analysis
 
 ```r
 Idents(combined) <- "sctype_classification"
@@ -285,7 +285,51 @@ for (ct in cell_types) {
 ```
 ---
 
-## 13. Save Final Results
+## 13. Visualization
+
+```r
+combined$cluster_sample <- paste0("cluster", combined$seurat_clusters, "-", combined$orig.ident)
+agg <- AggregateExpression(combined, group.by = "cluster_sample", assays = "RNA", return.seurat = TRUE)
+DefaultAssay(agg) <- "RNA"
+
+agg_mat <- GetAssayData(agg, layer = "data")
+
+expressed_genes <- rownames(agg_mat)[
+  agg_mat[, "cluster0-donor1"] > 2 &   
+  agg_mat[, "cluster0-donor2"] > 2     
+]
+
+top5 <- all_markers %>%
+  filter(p_val_adj < 0.05) %>%
+  filter(pct.1 > 0.25) %>%
+  filter(avg_log2FC > 0.5) %>%
+  filter(gene %in% expressed_genes) %>%   
+  group_by(cluster) %>%
+  slice_max(avg_log2FC, n = 5)
+
+genes.to.label <- unique(top5$gene)
+genes.to.label2 <- intersect(genes.to.label, rownames(agg))
+```
+
+```r
+p1 <- CellScatter(agg, cell1 = "cluster0-donor1", cell2 = "cluster0-donor2", highlight = genes.to.label2)
+p2 <- LabelPoints(plot = p1, points = genes.to.label2, repel = TRUE)
+
+ggsave("cluster0_scatter_top5.pdf", p2, width = 8, height = 6)
+```
+
+```r
+genes.manual <- c("S100A9", "ETV6", "CD74", "HLA-B")
+
+# FeaturePlot
+p_feat <- FeaturePlot(combined, features = genes.manual, split.by = "orig.ident", max.cutoff = 3, reduction = "umap")
+ggsave("cluster_FeaturePlot_manual.pdf", p_feat, width = 10, height = 12)
+
+p_vln <- VlnPlot(combined, features = genes.manual, split.by = "orig.ident", pt.size  = 0, ncol     = 2)
+ggsave("cluster_VlnPlot_manual.pdf", p_vln, width = 10, height = 12)
+```
+
+## 14. Save Final Results
 ```r
 save(combined, all_markers, top5, file = "final.RData")
 ```
