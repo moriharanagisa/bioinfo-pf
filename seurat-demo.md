@@ -103,7 +103,7 @@ ggsave("FeatureScatter_QC_donor2.pdf", scatter2)
 Open a new terminal:
 
 ```bash
-scp cfam0001@133.41.125.54:/DATA/cfam000*/*.pdf .
+scp cfam000*@133.41.125.54:/DATA/cfam000*/*.pdf .
 ```
 ---
 
@@ -177,52 +177,23 @@ es.max <- sctype_score(scRNAseqData = combined[["SCT"]]@scale.data, scaled = TRU
 ### Assign Cell Types
 
 ```r
-cL_results <- do.call("rbind",
- lapply(
-    unique(combined@meta.data$seurat_clusters),
-    function(cl) {
-
-      es.max.cl <- sort(
-        rowSums(
-          es.max[
-            ,
-            rownames(
-              combined@meta.data[
-                combined@meta.data$seurat_clusters == cl,
-              ]
-            )
-          ]
-        ),
-        decreasing = TRUE
-      )
-
-      head(
-        data.frame(
-          cluster = cl,
-          type = names(es.max.cl),
-          scores = es.max.cl
-        ),
-        10
-      )
-    }
-  )
-)
+cL_results <- do.call(rbind,
+  lapply(unique(combined@meta.data$seurat_clusters), function(cl) {
+    scores <- sort(rowSums(es.max[, rownames(combined@meta.data[combined$seurat_clusters == cl, ])]), decreasing = TRUE)
+    head(data.frame(cluster = cl, type = names(scores), scores = scores), 10)}))
 
 sctype_scores <- cL_results %>%
   group_by(cluster) %>%
-  top_n(n = 1, wt = scores)
+  slice_max(scores, n = 1)
 ```
 
 ### Add Annotation
 
 ```r
 combined@meta.data$sctype_classification <- ""
-
 for (j in unique(sctype_scores$cluster)) {
-
   cl_type <- sctype_scores[
-    sctype_scores$cluster == j,
-  ]
+    sctype_scores$cluster == j,]
 
   combined@meta.data$sctype_classification[
     combined@meta.data$seurat_clusters == j
