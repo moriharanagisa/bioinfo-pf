@@ -221,6 +221,7 @@ ggsave("UMAP_sctype_split.pdf", p5, width = 16, height = 10)
 ```
 <img width="1140" height="712" alt="image" src="https://github.com/user-attachments/assets/d61d51be-3849-4ef6-88e3-ac359e7fbf84" />
 <img width="1138" height="713" alt="image" src="https://github.com/user-attachments/assets/45544663-4a88-485c-a1e2-414eb912a40d" />
+
 ---
 
 ## 10. Differential Expression Analysis
