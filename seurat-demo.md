@@ -280,7 +280,7 @@ for (ct in cell_types) {
 ```
 ---
 
-## 15. Save Final Results
+## 13. Save Final Results
 ```r
 save(combined, all_markers, top5, file = "final.RData")
 ```
