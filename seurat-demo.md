@@ -133,6 +133,10 @@ anchors_sct <- FindIntegrationAnchors( object.list = list_sct, anchor.features =
 ```r
 combined_sct <- IntegrateData( anchorset = anchors_sct, normalization.method = "SCT")
 ```
+### Save R Data (optional)
+```r
+save(combined, file = "combined.RData")
+```
 ---
 
 ## 8. PCA and UMAP
@@ -151,10 +155,6 @@ scp cfam0001@133.41.125.54:/DATA/cfam000*/ElbowPlot.pdf .
 combined <- RunUMAP( combined, reduction = "pca", dims = 1:10)
 combined <- FindNeighbors( combined, reduction = "pca", dims = 1:10)
 combined <- FindClusters( combined, resolution = 0.5)
-```
----
-```r
-save(combined, file = "combined.RData")
 ```
 ---
 
@@ -300,7 +300,7 @@ for (ct in cell_types) {
 ## 15. Save Final Results
 
 ```r
-save(combined, all_markers, top5, file = "integrate.RData")
+save(combined, all_markers, top5, file = "final.RData")
 ```
 Open a new terminal:
 ```bash
