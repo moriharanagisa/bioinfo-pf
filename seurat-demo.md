@@ -87,6 +87,8 @@ vln2 <- VlnPlot( donor2, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"
 ggsave("VlnPlot_QC_donor1.pdf", vln1, width = 16, height = 10)
 ggsave("VlnPlot_QC_donor2.pdf", vln2, width = 16, height = 10)
 ```
+<img width="1142" height="708" alt="image" src="https://github.com/user-attachments/assets/f6bbdb50-caf6-4cce-a3e7-4f4f2b41bb4f" />
+
 
 ### Scatter Plots
 
@@ -99,6 +101,7 @@ scatter2 <- FeatureScatter( donor2, feature1 = "nCount_RNA", feature2 = "percent
   FeatureScatter( donor2, feature1 = "nCount_RNA", feature2 = "nFeature_RNA")
 ggsave("FeatureScatter_QC_donor2.pdf", scatter2, width = 16, height = 10)
 ```
+<img width="1136" height="706" alt="image" src="https://github.com/user-attachments/assets/f6b14bc6-fbe3-4019-9126-23c48929df19" />
 
 ### Download QC PDFs
 
@@ -156,6 +159,7 @@ combined <- RunUMAP( combined, reduction = "pca", dims = 1:10)
 combined <- FindNeighbors( combined, reduction = "pca", dims = 1:10)
 combined <- FindClusters( combined, graph.name = "integrated_snn", resolution = 0.5)
 ```
+<img width="751" height="740" alt="image" src="https://github.com/user-attachments/assets/813cf94a-548d-4198-9ef4-3db45988deb0" />
 ---
 
 ## 9. Cell Type Annotation with ScType
@@ -214,6 +218,8 @@ p5 <- DimPlot( combined, reduction = "umap", group.by = "sctype_classification",
 ggsave("UMAP_sctype.pdf", p4, width = 16, height = 10)
 ggsave("UMAP_sctype_split.pdf", p5, width = 16, height = 10)
 ```
+<img width="1140" height="712" alt="image" src="https://github.com/user-attachments/assets/d61d51be-3849-4ef6-88e3-ac359e7fbf84" />
+<img width="1138" height="713" alt="image" src="https://github.com/user-attachments/assets/45544663-4a88-485c-a1e2-414eb912a40d" />
 ---
 
 ## 10. Differential Expression Analysis
