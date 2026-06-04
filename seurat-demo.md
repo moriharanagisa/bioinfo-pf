@@ -84,8 +84,8 @@ donor2[["percent.mt"]] <- PercentageFeatureSet(donor2, pattern = "^MT-")
 vln1 <- VlnPlot( donor1, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)
 vln2 <- VlnPlot( donor2, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)
 
-ggsave("VlnPlot_QC_donor1.pdf", vln1)
-ggsave("VlnPlot_QC_donor2.pdf", vln2)
+ggsave("VlnPlot_QC_donor1.pdf", vln1, width = 16, height = 10)
+ggsave("VlnPlot_QC_donor2.pdf", vln2, width = 16, height = 10)
 ```
 
 ### Scatter Plots
@@ -93,11 +93,11 @@ ggsave("VlnPlot_QC_donor2.pdf", vln2)
 ```r
 scatter1 <- FeatureScatter( donor1, feature1 = "nCount_RNA", feature2 = "percent.mt") +
   FeatureScatter( donor1, feature1 = "nCount_RNA", feature2 = "nFeature_RNA")
-ggsave("FeatureScatter_QC_donor1.pdf", scatter1)
+ggsave("FeatureScatter_QC_donor1.pdf", scatter1, width = 16, height = 10)
 
 scatter2 <- FeatureScatter( donor2, feature1 = "nCount_RNA", feature2 = "percent.mt") +
   FeatureScatter( donor2, feature1 = "nCount_RNA", feature2 = "nFeature_RNA")
-ggsave("FeatureScatter_QC_donor2.pdf", scatter2)
+ggsave("FeatureScatter_QC_donor2.pdf", scatter2, width = 16, height = 10)
 ```
 
 ### Download QC PDFs
@@ -152,8 +152,8 @@ Open a new terminal:
 scp cfam0001@133.41.125.54:/DATA/cfam000*/ElbowPlot.pdf .
 ```
 ```r
-combined_sct <- RunUMAP( combined_sct, reduction = "pca", dims = 1:8)
-combined_sct <- FindNeighbors( combined_sct, reduction = "pca", dims = 1:8)
+combined_sct <- RunUMAP( combined_sct, reduction = "pca", dims = 1:10)
+combined_sct <- FindNeighbors( combined_sct, reduction = "pca", dims = 1:10)
 combined_sct <- FindClusters( combined_sct, graph.name = "integrated_snn", resolution = 0.5)
 ```
 ---
@@ -211,8 +211,8 @@ for (j in unique(sctype_scores$cluster)) {
 ```r
 p4 <- DimPlot(combined, reduction = "umap", group.by = c("sctype_classification", "orig.ident"), label = TRUE, repel = TRUE)
 p5 <- DimPlot( combined, reduction = "umap", group.by = "sctype_classification", split.by = "orig.ident", label = TRUE, repel = TRUE,)
-ggsave("UMAP_sctype.pdf", p4)
-ggsave("UMAP_sctype_split.pdf", p5)
+ggsave("UMAP_sctype.pdf", p4, width = 16, height = 10)
+ggsave("UMAP_sctype_split.pdf", p5, width = 16, height = 10)
 ```
 ---
 
