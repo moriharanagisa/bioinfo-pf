@@ -219,21 +219,18 @@ ggsave("UMAP_sctype_split.pdf", p5)
 
 ```r
 DefaultAssay(combined) <- "RNA"
-
 combined[["RNA"]] <- JoinLayers(combined[["RNA"]])
-
 Idents(combined) <- "sctype_classification"
 ```
 
-## Marker Detection
+### Marker Detection
 
 ```r
 all_markers <- FindAllMarkers(combined, only.pos = TRUE, min.pct = 0.25, logfc.threshold = 0.25)
-
 write.csv(all_markers, "all_markers.csv", row.names = FALSE)
 ```
 
-## Top 5 Markers
+### Top 5 Markers
 
 ```r
 top5 <- all_markers %>% group_by(cluster) %>% top_n(n = 5, wt = avg_log2FC)
