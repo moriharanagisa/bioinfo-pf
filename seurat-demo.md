@@ -117,6 +117,10 @@ donor2 <- subset( donor2, subset = nCount_RNA < 50000 & nFeature_RNA > 500 & nFe
 
 ## 7. Dataset Integration
 ```r
+donor1_sct <- SCTransform(donor1)
+donor2_sct <- SCTransform(donor2)
+```
+```r
 list_sct <- c(donor1, donor2)
 features <- SelectIntegrationFeatures( object.list = list_sct)
 list_sct <- PrepSCTIntegration( object.list = list_sct, anchor.features = features)
