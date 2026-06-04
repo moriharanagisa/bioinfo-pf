@@ -121,7 +121,7 @@ donor1_sct <- SCTransform(donor1)
 donor2_sct <- SCTransform(donor2)
 ```
 ```r
-list_sct <- c(donor1, donor2)
+list_sct <- c(donor1_sct, donor2_sct)
 features <- SelectIntegrationFeatures( object.list = list_sct)
 list_sct <- PrepSCTIntegration( object.list = list_sct, anchor.features = features)
 ```
