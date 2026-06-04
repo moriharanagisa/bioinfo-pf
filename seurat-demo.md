@@ -267,44 +267,19 @@ ggsave("FeaturePlot_markers.pdf", p_feat)
 
 ```r
 Idents(combined) <- "sctype_classification"
-
-cell_types <- unique(
-  combined@meta.data$sctype_classification
-)
+cell_types <- unique(combined@meta.data$sctype_classification)
 
 for (ct in cell_types) {
 
   obj_ct <- subset(combined, idents = ct)
   Idents(obj_ct) <- "orig.ident"
-  tryCatch({deg <- FindMarkers(
-      obj_ct,
-      ident.1 = "donor1",
-      ident.2 = "donor2",
-      min.pct = 0.25,
-      logfc.threshold = 0.25,
-      verbose = FALSE
-    )
-
-    write.csv( deg,
-      paste0(
-        "DEG_",
-        gsub(" ", "_", ct),
-        "_donor1_vs_donor2.csv"
-      )
-    )
-
-  }, error = function(e) {
-
-    cat("Skipping:", ct, "\n")
-
-  })
-}
+  tryCatch({deg <- FindMarkers(obj_ct, ident.1 = "donor1", ident.2 = "donor2", min.pct = 0.25, logfc.threshold = 0.25, verbose = FALSE)
+    write.csv( deg, paste0("DEG_", gsub(" ", "_", ct), "_donor1_vs_donor2.csv"))
+　　}, error = function(e))}
 ```
-
 ---
 
 ## 15. Save Final Results
-
 ```r
 save(combined, all_markers, top5, file = "final.RData")
 ```
@@ -313,13 +288,3 @@ Open a new terminal:
 scp cfam0001@133.41.125.54:/DATA/cfam000*/*.pdf .
 scp cfam0001@133.41.125.54:/DATA/cfam000*/*.csv .
 ```
-**Output Files**
-
-- integrate.RData
-- all_markers.csv
-- DEG_*_donor1_vs_donor2.csv
-- UMAP_sctype.pdf
-- UMAP_sctype_split.pdf
-- DotPlot_top5.pdf
-- VlnPlot_markers.pdf
-- FeaturePlot_markers.pdf
