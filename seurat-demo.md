@@ -89,11 +89,10 @@ ggsave("VlnPlot_QC_donor2.pdf", vln2)
 ```r
 scatter1 <- FeatureScatter( donor1, feature1 = "nCount_RNA", feature2 = "percent.mt") +
   FeatureScatter( donor1, feature1 = "nCount_RNA", feature2 = "nFeature_RNA")
+ggsave("FeatureScatter_QC_donor1.pdf", scatter1)
 
 scatter2 <- FeatureScatter( donor2, feature1 = "nCount_RNA", feature2 = "percent.mt") +
   FeatureScatter( donor2, feature1 = "nCount_RNA", feature2 = "nFeature_RNA")
-
-ggsave("FeatureScatter_QC_donor1.pdf", scatter1)
 ggsave("FeatureScatter_QC_donor2.pdf", scatter2)
 ```
 
