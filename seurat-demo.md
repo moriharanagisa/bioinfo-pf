@@ -253,15 +253,21 @@ top5 <- all_markers %>% group_by(cluster) %>% top_n(n = 5, wt = avg_log2FC)
 p_dot <- DotPlot(combined, features = unique(top5$gene)) + RotatedAxis()
 ggsave("DotPlot_top5.pdf", p_dot, width = 16, height = 10)
 ```
+<img width="1148" height="708" alt="image" src="https://github.com/user-attachments/assets/1aea1962-b15a-4066-b486-c3352314b8cf" />
+
 ```r
 pbmc_markers <- c("CD3D", "CD4", "CD8A", "CD19", "MS4A1", "CD14", "LYZ", "GNLY", "NKG7", "FCER1A", "CST3")
 p_vln <- VlnPlot(combined, features = pbmc_markers, group.by = "sctype_classification", pt.size = 0, ncol = 4)
 ggsave("VlnPlot_markers.pdf", p_vln, width = 16, height = 10)
 ```
+<img width="1141" height="710" alt="image" src="https://github.com/user-attachments/assets/b3fee6ad-d74d-46e9-9fda-73b708781dc3" />
+
 ```r
 p_feat <- FeaturePlot(combined, features = pbmc_markers, ncol = 4)
 ggsave("FeaturePlot_markers.pdf", p_feat, width = 16, height = 10)
 ```
+<img width="1138" height="708" alt="image" src="https://github.com/user-attachments/assets/11b1eaae-e465-4e19-a3f6-e1fa138a80dd" />
+
 ---
 
 ## 12. Cell Type-Specific DEG Analysis
