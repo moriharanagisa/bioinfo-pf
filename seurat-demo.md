@@ -223,8 +223,8 @@ p5 <- DimPlot( combined, reduction = "umap", group.by = "sctype_classification",
 ggsave("UMAP_sctype.pdf", p4, width = 16, height = 10)
 ggsave("UMAP_sctype_split.pdf", p5, width = 16, height = 10)
 ```
-<img width="1140" height="712" alt="image" src="https://github.com/user-attachments/assets/d61d51be-3849-4ef6-88e3-ac359e7fbf84" />
-<img width="1138" height="713" alt="image" src="https://github.com/user-attachments/assets/45544663-4a88-485c-a1e2-414eb912a40d" />
+<img width="1144" height="708" alt="image" src="https://github.com/user-attachments/assets/495711c8-a7a6-468b-9364-ff8dd00dee5f" />
+<img width="1139" height="706" alt="image" src="https://github.com/user-attachments/assets/20a6e31d-991d-4827-9f30-ed892062c73a" />
 
 ---
 
