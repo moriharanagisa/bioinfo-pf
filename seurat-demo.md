@@ -506,7 +506,11 @@ for (ct in cell_types) {
 ```r
 save(combined, all_markers, top5, file = "integrate.RData")
 ```
-
+Open a new terminal:
+```bash
+scp cfam0001@133.41.125.54:/DATA/cfam000*/*.pdf .
+scp cfam0001@133.41.125.54:/DATA/cfam000*/*.csv .
+```
 **Output Files**
 
 - integrate.RData
