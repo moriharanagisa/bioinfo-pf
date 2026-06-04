@@ -43,6 +43,7 @@ R
 ```r
 install.packages("HGNChelper")  # First time only
 install.packages("openxlsx")    # First time only
+# Type 48 and press Enter
 
 library(dplyr)
 library(Seurat)
@@ -109,7 +110,6 @@ scp cfam0001@133.41.125.54:/DATA/cfam000*/*.pdf .
 
 ```r
 donor1 <- subset( donor1, subset = nCount_RNA < 50000 & nFeature_RNA > 500 & nFeature_RNA < 7000 & percent.mt < 10)
-
 donor2 <- subset( donor2, subset = nCount_RNA < 50000 & nFeature_RNA > 500 & nFeature_RNA < 7000 & percent.mt < 10)
 ```
 ---
