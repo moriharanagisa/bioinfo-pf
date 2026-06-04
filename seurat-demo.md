@@ -117,9 +117,7 @@ donor2 <- subset( donor2, subset = nCount_RNA < 50000 & nFeature_RNA > 500 & nFe
 ## 7. Dataset Integration
 ```r
 list_sct <- c(donor1, donor2)
-
 features <- SelectIntegrationFeatures( object.list = list_sct)
-
 list_sct <- PrepSCTIntegration( object.list = list_sct, anchor.features = features)
 ```
 ```r
@@ -132,14 +130,10 @@ combined_sct <- IntegrateData( anchorset = anchors_sct, normalization.method = "
 
 ## 8. PCA and UMAP
 ```r
-combined_sct <- RunPCA(
-  combined_sct,
-  verbose = FALSE
-)
+combined_sct <- RunPCA(combined_sct, verbose = FALSE)
 ```
 ```r
 p <- ElbowPlot(combined_sct, ndims = 15)
-
 ggsave("ElbowPlot.pdf", p)
 ```
 Open a new terminal:
