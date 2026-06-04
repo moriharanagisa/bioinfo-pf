@@ -19,7 +19,8 @@
 # /DATA/cfam000*/micromamba
 
 # re-login
-
+```
+```bash
 micromamba self-update
 ```
 
@@ -30,9 +31,11 @@ micromamba create -n seurat -c conda-forge -c bioconda \
   r-base=4.3 r-seurat r-seuratobject r-tidyverse r-patchwork
 
 # Type Y and press Enter
-
+```
+```bash
 micromamba activate seurat
-
+```
+```bash
 R
 ```
 
