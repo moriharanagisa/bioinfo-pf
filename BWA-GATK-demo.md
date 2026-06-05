@@ -367,7 +367,9 @@ for bamfile in *_1_val.sort.dedup.bam; do
 
 done
 ```
-
+```bash
+cp MH* /mnt/add2/mukaida-test/
+```
 ---
 
 ## MultiQC report
