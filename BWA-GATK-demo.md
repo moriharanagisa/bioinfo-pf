@@ -4,7 +4,7 @@
 
 ```bash
 # Login
-ssh gene@10.34.21.182
+ssh gene@**.**.**.***
 ```
 ```bash
 # Extract tar file
