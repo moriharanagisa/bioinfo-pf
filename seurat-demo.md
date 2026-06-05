@@ -152,7 +152,7 @@ ggsave("ElbowPlot.pdf", p)
 ```
 Open a new terminal:
 ```bash
-scp cfam0001@133.41.125.54:/DATA/cfam000*/ElbowPlot.pdf .
+scp cfam000*@133.41.125.54:/DATA/cfam000*/ElbowPlot.pdf .
 ```
 <img width="751" height="740" alt="image" src="https://github.com/user-attachments/assets/813cf94a-548d-4198-9ef4-3db45988deb0" />
 
@@ -341,6 +341,6 @@ save(combined, all_markers, top5, file = "final.RData")
 ```
 Open a new terminal:
 ```bash
-scp cfam0001@133.41.125.54:/DATA/cfam000*/*.pdf .
-scp cfam0001@133.41.125.54:/DATA/cfam000*/*.csv .
+scp cfam000*@133.41.125.54:/DATA/cfam000*/*.pdf .
+scp cfam000*@133.41.125.54:/DATA/cfam000*/*.csv .
 ```
