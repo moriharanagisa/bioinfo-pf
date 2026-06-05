@@ -256,20 +256,20 @@ top5 <- all_markers %>% group_by(cluster) %>% top_n(n = 5, wt = avg_log2FC)
 p_dot <- DotPlot(combined, features = unique(top5$gene)) + RotatedAxis()
 ggsave("DotPlot_top5.pdf", p_dot, width = 16, height = 10)
 ```
-<img width="1148" height="708" alt="image" src="https://github.com/user-attachments/assets/1aea1962-b15a-4066-b486-c3352314b8cf" />
+<img width="1144" height="711" alt="image" src="https://github.com/user-attachments/assets/5a0d7069-d077-44f2-88ef-f4383e49f195" />
 
 ```r
 pbmc_markers <- c("CD3D", "CD4", "CD8A", "CD19", "MS4A1", "CD14", "LYZ", "GNLY", "NKG7", "FCER1A", "CST3")
 p_vln <- VlnPlot(combined, features = pbmc_markers, group.by = "sctype_classification", pt.size = 0, ncol = 4)
 ggsave("VlnPlot_markers.pdf", p_vln, width = 16, height = 10)
 ```
-<img width="1141" height="710" alt="image" src="https://github.com/user-attachments/assets/b3fee6ad-d74d-46e9-9fda-73b708781dc3" />
+<img width="1147" height="715" alt="image" src="https://github.com/user-attachments/assets/229ba4e2-d375-43ec-84ee-82a614a95543" />
 
 ```r
 p_feat <- FeaturePlot(combined, features = pbmc_markers, ncol = 4)
 ggsave("FeaturePlot_markers.pdf", p_feat, width = 16, height = 10)
 ```
-<img width="1138" height="708" alt="image" src="https://github.com/user-attachments/assets/11b1eaae-e465-4e19-a3f6-e1fa138a80dd" />
+<img width="1146" height="713" alt="image" src="https://github.com/user-attachments/assets/fb323cf8-d914-478f-8ed1-93be13f44eee" />
 
 ---
 
@@ -288,56 +288,51 @@ for (ct in cell_types) {
 ```
 ---
 
-## 13. Visualization
+## 13. Visualization (ex. CD8+ NKT-like cells)
 
 ```r
-combined$cluster_sample <- paste0("cluster", combined$seurat_clusters, "-", combined$orig.ident)
-agg <- AggregateExpression(combined, group.by = "cluster_sample", assays = "RNA", return.seurat = TRUE)
-DefaultAssay(agg) <- "RNA"
+DefaultAssay(combined) <- "RNA"
+combined[["RNA"]] <- JoinLayers(combined[["RNA"]])
+combined <- NormalizeData(combined, verbose = FALSE)
 
-agg_mat <- GetAssayData(agg, layer = "data")
+obj_nkt <- subset(combined, subset = sctype_classification == "CD8+ NKT-like cells")
+Idents(obj_nkt) <- "orig.ident"
 
-expressed_genes <- rownames(agg_mat)[
-  agg_mat[, "cluster0-donor1"] > 2 &   
-  agg_mat[, "cluster0-donor2"] > 2     
-]
+deg_nkt <- FindMarkers(obj_nkt, ident.1 = "donor1", ident.2 = "donor2", min.pct = 0.25, logfc.threshold = 0.25, verbose = FALSE)
+write.csv(deg_nkt, "DEG_CD8_NKT_like_cells_donor1_vs_donor2.csv")
 
-top5 <- all_markers %>%
-  filter(p_val_adj < 0.05) %>%
-  filter(pct.1 > 0.25) %>%
-  filter(avg_log2FC > 0.5) %>%
-  filter(gene %in% expressed_genes) %>%   
-  group_by(cluster) %>%
+avg_exp <- AverageExpression(obj_nkt, assays = "RNA", slot = "data", group.by = "orig.ident")$RNA
+
+expressed_genes <- rownames(avg_exp)[avg_exp[, "donor1"] > 1 | avg_exp[, "donor2"] > 1]
+
+top5_nkt <- deg_nkt %>%
+  filter(p_val_adj < 0.05, pct.1 > 0.25, avg_log2FC > 0.5, rownames(.) %in% expressed_genes) %>%
   slice_max(avg_log2FC, n = 5)
 
-genes.to.label <- unique(top5$gene)
+genes.to.label <- rownames(top5_nkt)
+
+agg <- AggregateExpression(obj_nkt, group.by = "orig.ident", assays = "RNA", return.seurat = TRUE)
+DefaultAssay(agg) <- "RNA"
+
 genes.to.label2 <- intersect(genes.to.label, rownames(agg))
-```
 
-```r
-p1 <- CellScatter(agg, cell1 = "cluster0-donor1", cell2 = "cluster0-donor2", highlight = genes.to.label2)
+p1 <- CellScatter(agg, cell1 = "donor1", cell2 = "donor2", highlight = genes.to.label2)
 p2 <- LabelPoints(plot = p1, points = genes.to.label2, repel = TRUE)
+ggsave("Scatter_CD8_NKT_top5.pdf", p2, width = 8, height = 6)
 
-ggsave("cluster0_scatter_top5.pdf", p2, width = 8, height = 6)
+p3 <- FeaturePlot(combined, features = genes.to.label2, split.by = "orig.ident", reduction = "umap")
+ggsave("FeaturePlot_CD8_NKT_top5.pdf", p3, width = 10, height = 16)
+
+p4 <- VlnPlot(obj_nkt, features = genes.to.label2, group.by = "orig.ident", pt.size = 0, ncol = 2)
+ggsave("VlnPlot_CD8_NKT_top5.pdf", p4, width = 10, height = 12)
 ```
-<img width="950" height="710" alt="image" src="https://github.com/user-attachments/assets/ab3ada11-c8ac-410f-af34-4e27fdcd3408" />
-
-```r
-genes.manual <- c("S100A9", "ETV6", "CD74", "HLA-B")
-
-# FeaturePlot
-p_feat <- FeaturePlot(combined, features = genes.manual, split.by = "orig.ident", max.cutoff = 3, reduction = "umap")
-ggsave("cluster_FeaturePlot_manual.pdf", p_feat, width = 10, height = 12)
-
-p_vln <- VlnPlot(combined, features = genes.manual, split.by = "orig.ident", pt.size  = 0, ncol     = 2)
-ggsave("cluster_VlnPlot_manual.pdf", p_vln, width = 10, height = 12)
-```
-<img width="472" height="762" alt="image" src="https://github.com/user-attachments/assets/e5bbf9c5-6826-4977-894e-bb60670ba4b6" />
-<img width="531" height="639" alt="image" src="https://github.com/user-attachments/assets/e8df5085-d043-46cb-a8d3-d9b23d20ed64" />
+<img width="949" height="706" alt="image" src="https://github.com/user-attachments/assets/959ca877-96f5-4a84-aafb-a9db305f2277" />
+<img width="476" height="761" alt="image" src="https://github.com/user-attachments/assets/dbf5e5f3-1d26-46e8-9908-9e6acf29a050" />
+<img width="531" height="641" alt="image" src="https://github.com/user-attachments/assets/669c84d5-deea-4d7a-8553-0c3e578c4676" />
 
 ## 14. Save Final Results
 ```r
-save(combined, all_markers, top5, file = "final.RData")
+save(combined, all_markers, file = "final.RData")
 ```
 Open a new terminal:
 ```bash
