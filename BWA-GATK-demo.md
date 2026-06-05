@@ -42,7 +42,7 @@ done
 ```
 ```text
 # Detach container
-Ctrl + D
+Ctrl + P, Ctrl + Q
 ```
 
 ---
@@ -77,7 +77,7 @@ parallel -j 4 process_sample
 
 ```text
 # Detach container
-Ctrl + D
+Ctrl + P, Ctrl + Q
 ```
 
 ---
@@ -255,7 +255,7 @@ sample=$(basename {} .indel.raw.vcf.gz)
 
 ```bash
 # Detach container
-Ctrl + D
+Ctrl + P, Ctrl + Q
 ```
 
 ```bash
@@ -346,7 +346,7 @@ done
 
 ```bash
 # Detach container
-Ctrl + D
+Ctrl + P, Ctrl + Q
 ```
 
 ```bash
