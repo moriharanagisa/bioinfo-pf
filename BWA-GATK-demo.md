@@ -5,19 +5,19 @@
 ```bash
 # Login
 ssh gene@10.34.21.182
-
+```
+```bash
 # Extract tar file
 cd /mnt/add2/
 tar -xvf /mnt/add2/X207SC26044118-Z01-F001.tar
-
-# Set project name
-export PROJECT="260501-miyoshi"
-
+```
+```bash
 # Create project directory
 cd /DATA/centos/GATK
-sudo mkdir ${PROJECT}
-cd ${PROJECT}
-
+sudo mkdir 260501-miyoshi
+cd 260501-miyoshi
+```
+```bash
 # Copy FASTQ files
 sudo cp /mnt/add2/X207SC26044118-Z01-F001/01.RawData/*/*.fq.gz ./
 ```
@@ -30,9 +30,9 @@ sudo cp /mnt/add2/X207SC26044118-Z01-F001/01.RawData/*/*.fq.gz ./
 # Enter Trim Galore container
 docker start trimgalore-0.6.10
 docker attach trimgalore-0.6.10
-
-export PROJECT="260501-miyoshi"
-cd /home/GATK/${PROJECT}
+```
+```bash
+cd /home/GATK/260501-miyoshi
 
 # Trim paired-end reads
 for r1 in *_1.fq.gz; do
@@ -40,7 +40,6 @@ for r1 in *_1.fq.gz; do
     trim_galore --paired "$r1" "$r2"
 done
 ```
-
 ```text
 # Detach container
 Ctrl + D
