@@ -346,7 +346,7 @@ done
 
 ```bash
 # Detach container
-Ctrl + P, Ctrl + Q
+Ctrl + D
 ```
 
 ```bash
