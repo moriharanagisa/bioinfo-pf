@@ -291,15 +291,10 @@ for (ct in cell_types) {
 ## 13. Visualization (ex. CD8+ NKT-like cells)
 
 ```r
-DefaultAssay(combined) <- "RNA"
-combined[["RNA"]] <- JoinLayers(combined[["RNA"]])
-combined <- NormalizeData(combined, verbose = FALSE)
-
 obj_nkt <- subset(combined, subset = sctype_classification == "CD8+ NKT-like cells")
 Idents(obj_nkt) <- "orig.ident"
 
-deg_nkt <- FindMarkers(obj_nkt, ident.1 = "donor1", ident.2 = "donor2", min.pct = 0.25, logfc.threshold = 0.25, verbose = FALSE)
-write.csv(deg_nkt, "DEG_CD8_NKT_like_cells_donor1_vs_donor2.csv")
+deg_nkt <- read.csv("DEG_CD8_NKT_like_cells_donor1_vs_donor2.csv", row.names = 1, check.names = FALSE)
 
 avg_exp <- AverageExpression(obj_nkt, assays = "RNA", slot = "data", group.by = "orig.ident")$RNA
 
