@@ -367,13 +367,16 @@ for bamfile in *_1_val.sort.dedup.bam; do
 
 done
 ```
-```bash
-cp MH* /mnt/add2/mukaida-test/
-```
+
 ---
 
 ## MultiQC report
 
 ```bash
+conda activate multiqc_env
 multiqc .
+```
+## Copy data
+```bash
+cp MH* multiqc_report.html /mnt/add2/mukaida-test/
 ```
