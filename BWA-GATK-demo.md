@@ -255,7 +255,7 @@ sample=$(basename {} .indel.raw.vcf.gz)
 
 ```bash
 # Detach container
-Ctrl + P, Ctrl + Q
+Ctrl + D
 ```
 
 ```bash
