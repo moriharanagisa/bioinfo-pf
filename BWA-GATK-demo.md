@@ -1,13 +1,5 @@
 # GATK Variant Calling Pipeline
 
-## Set project name
-
-```bash
-PROJECT="260501-miyoshi"
-```
-
----
-
 ## Extract FASTQ files
 
 ```bash
@@ -17,6 +9,9 @@ ssh gene@10.34.21.182
 # Extract tar file
 cd /mnt/add2/
 tar -xvf /mnt/add2/X207SC26044118-Z01-F001.tar
+
+# Set project name
+export PROJECT="260501-miyoshi"
 
 # Create project directory
 cd /DATA/centos/GATK
