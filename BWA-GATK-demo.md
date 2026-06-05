@@ -31,6 +31,7 @@ sudo cp /mnt/add2/X207SC26044118-Z01-F001/01.RawData/*/*.fq.gz ./
 docker start trimgalore-0.6.10
 docker attach trimgalore-0.6.10
 
+export PROJECT="260501-miyoshi"
 cd /home/GATK/${PROJECT}
 
 # Trim paired-end reads
@@ -51,7 +52,7 @@ Ctrl + P, Ctrl + Q
 
 ```bash
 docker attach centos-DATA
-
+export PROJECT="260501-miyoshi"
 cd /home/GATK/GATK
 ```
 
