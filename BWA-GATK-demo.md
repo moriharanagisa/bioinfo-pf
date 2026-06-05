@@ -78,7 +78,7 @@ parallel -j 4 process_sample
 
 ```text
 # Detach container
-Ctrl + P, Ctrl + Q
+Ctrl + D
 ```
 
 ---
