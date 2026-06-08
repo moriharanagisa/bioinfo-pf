@@ -19,7 +19,7 @@ cd 260501-user
 ```
 ```bash
 # Copy FASTQ files
-sudo cp /mnt/add2/X207SC26044118-Z01-F001/01.RawData/*/*.fq.gz ./
+sudo cp /mnt/add2/X207SC260*****-Z01-F001/01.RawData/*/*.fq.gz ./
 ```
 
 ---
