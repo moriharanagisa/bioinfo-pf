@@ -9,13 +9,13 @@ ssh gene@**.**.**.***
 ```bash
 # Extract tar file
 cd /mnt/add2/
-tar -xvf /mnt/add2/X207SC26044118-Z01-F001.tar
+tar -xvf /mnt/add2/X207SC260*****-Z01-F001.tar
 ```
 ```bash
 # Create project directory
 cd /DATA/centos/GATK
-sudo mkdir 260501-miyoshi
-cd 260501-miyoshi
+sudo mkdir 260501-user
+cd 260501-user
 ```
 ```bash
 # Copy FASTQ files
@@ -32,7 +32,7 @@ docker start trimgalore-0.6.10
 docker attach trimgalore-0.6.10
 ```
 ```bash
-cd /home/GATK/260501-miyoshi
+cd /home/GATK/260501-user
 
 # Trim paired-end reads
 for r1 in *_1.fq.gz; do
@@ -51,7 +51,7 @@ Ctrl + P, Ctrl + Q
 
 ```bash
 docker attach centos-DATA
-export PROJECT="260501-miyoshi"
+export PROJECT="260501-user"
 cd /home/GATK/GATK
 ```
 
@@ -378,6 +378,6 @@ multiqc .
 ```
 ## Copy data
 ```bash
-cp MH* /mnt/add2/mukaida-test/
-cp multiqc_report.html /mnt/add2/mukaida-test/
+cp MH* /mnt/add2/**/
+cp multiqc_report.html /mnt/add2/**/
 ```
