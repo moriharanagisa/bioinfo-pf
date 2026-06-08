@@ -45,7 +45,7 @@ Browse available datasets:
 
 https://www.10xgenomics.com/datasets?sort=publishedAt+DESC
 
-Example: PBMC 5K Dataset (Donor 1 and Donor 2)
+Example: PBMC 5K Dataset ([donor1](https://www.10xgenomics.com/datasets/5k_Human_Donor1_PBMC_3p_gem-x) and [donor2](https://www.10xgenomics.com/datasets/5k_Human_Donor2_PBMC_3p_gem-x))
 
 ```bash
 wget https://cf.10xgenomics.com/samples/cell-exp/9.0.0/5k_Human_Donor1_PBMC_3p_gem-x_Multiplex/5k_Human_Donor1_PBMC_3p_gem-x_Multiplex_fastqs.tar
