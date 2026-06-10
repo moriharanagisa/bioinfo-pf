@@ -6,7 +6,7 @@
 ```bash
 # Place fastq files in /DATA/centos/RNAseq/fastq
 cd /DATA/centos/RNAseq/fastq
-sudo /mnt/add2/*/*.fq .
+sudo cp /mnt/add2/*/*.fq .
 
 # docker attach trimgalore-0.6.10
 for r1 in *_1.fq; do
