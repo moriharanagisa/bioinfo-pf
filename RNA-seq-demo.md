@@ -1,6 +1,4 @@
 # RNA-seq Analysis Pipeline
-## Mouse bulk RNA-seq: TrimGalore → STAR → RSEM → DESeq2 → GO/KEGG
-
 ---
 
 ## 1. Preprocessing: TrimGalore
@@ -8,6 +6,7 @@
 ```bash
 # Place fastq files in /DATA/centos/RNAseq/fastq
 cd /DATA/centos/RNAseq/fastq
+sudo /mnt/add2/*/*.fq .
 
 # docker attach trimgalore-0.6.10
 for r1 in *_1.fq; do
@@ -23,14 +22,14 @@ done
 ```bash
 cd ../STAR
 
-for fq1 in ../fastq-harada/*_1_val_1.fq; do
+for fq1 in ../fastq/*_1_val_1.fq; do
   sample=$(basename "$fq1" | sed 's/_1_val_1\.fq//')
   echo "mapping: ${sample}"
   ../STAR-2.7.0a/bin/Linux_x86_64/STAR \
     --runMode alignReads \
     --genomeDir ../ref/STAR_reference_mouse \
-    --readFilesIn ../fastq-harada/${sample}_1_val_1.fq \
-                  ../fastq-harada/${sample}_2_val_2.fq \
+    --readFilesIn ../fastq/${sample}_1_val_1.fq \
+                  ../fastq/${sample}_2_val_2.fq \
     --outSAMtype BAM SortedByCoordinate \
     --runThreadN 128 \
     --quantMode TranscriptomeSAM \
@@ -43,7 +42,7 @@ done
 ## 3. Quantification: RSEM
 
 ```bash
-for fq1 in ../fastq-harada/*_1_val_1.fq; do
+for fq1 in ../fastq/*_1_val_1.fq; do
   sample=$(basename "$fq1" | sed 's/_1_val_1\.fq//')
   ../RSEM-1.3.3/rsem-calculate-expression \
     --num-threads 128 \
