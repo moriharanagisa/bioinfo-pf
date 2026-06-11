@@ -46,8 +46,8 @@ cellranger testrun --id=check_install
 
 ## 4. Download Example Dataset
 
-10x Genomics public datasets can be browsed [here](https://www.10xgenomics.com/datasets?sort=publishedAt+DESC). For this tutorial, we will use the PBMC 5K dataset as an example.
-
+10x Genomics public datasets can be browsed [here](https://www.10xgenomics.com/datasets?sort=publishedAt+DESC)
+For this tutorial, we will use the PBMC 5K dataset as an example.
 
 dowmload the [donor1](https://www.10xgenomics.com/datasets/5k_Human_Donor1_PBMC_3p_gem-x) raw data
 ```bash
@@ -59,7 +59,6 @@ wget https://cf.10xgenomics.com/samples/cell-exp/9.0.0/5k_Human_Donor2_PBMC_3p_g
 ```
 
 Extract FASTQ Files
-
 ```bash
 tar -xvf 5k_Human_Donor1_PBMC_3p_gem-x_Multiplex_fastqs.tar
 ```
