@@ -123,16 +123,10 @@ scp -r cfam000*@133.41.125.54:/DATA/cfam000*/donor2/outs/ donor2
 ## 7. Review QC Metrics
 **Environment:** Local Computer
 
-Open:
+Open the following Cell Ranger QC reports in your web browser:
 
-```text
-donor1/web_summary.html
-```
-```text
-donor2/web_summary.html
-```
-
-in your web browser.
+- `donor1/web_summary.html`
+- `donor2/web_summary.html`
 
 The report includes:
 
