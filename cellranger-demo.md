@@ -57,7 +57,7 @@ download the [donor2](https://www.10xgenomics.com/datasets/5k_Human_Donor2_PBMC_
 ```bash
 wget https://cf.10xgenomics.com/samples/cell-exp/9.0.0/5k_Human_Donor2_PBMC_3p_gem-x_Multiplex/5k_Human_Donor2_PBMC_3p_gem-x_Multiplex_fastqs.tar
 ```
-
+<br>
 Extract FASTQ Files
 ```bash
 tar -xvf 5k_Human_Donor1_PBMC_3p_gem-x_Multiplex_fastqs.tar
