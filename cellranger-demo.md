@@ -107,6 +107,8 @@ cellranger count \
 ## 6. Download Results to Local Computer
 **Environment:** Local Computer
 
+> The downloaded folder will be saved in your current working directory, which can be checked by running `pwd` in a terminal on your local computer.
+
 Open a new PowerShell or Terminal window and run:
 
 ```bash
