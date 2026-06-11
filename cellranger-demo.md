@@ -11,18 +11,17 @@ Open the Cell Ranger download page:
 
 [Downloads](https://www.10xgenomics.com/support/jp/software/cell-ranger/downloads?utm_source=chatgpt.com#download-links)
 
-Cell Ranger 10.0.0
+### Cell Ranger 10.0.0
 1. Under **"tar.gz compression"**, Select the **wget** tab.
 2. Click **Copy** to copy the download command.
 3. Paste the command into the terminal and execute it.
 
-Reference
+### Reference
 1. Under Human reference (GRCh38) - 2024-A, Select the **wget** tab.
 2. Click **Copy** to copy the download command.
 3. Paste the command into the terminal and execute it.
----
-## 2. Extract Cell Ranger & Reference
 
+### Extract downloaded files
 ```bash
 tar -xzvf cellranger-10.0.0.tar.gz
 ```
@@ -30,7 +29,11 @@ tar -xzvf cellranger-10.0.0.tar.gz
 tar -xzvf refdata-gex-GRCh38-2024-A.tar.gz
 ```
 ---
-## 3. Add Cell Ranger to PATH
+## 2. Add Cell Ranger to PATH
+**Environment:** Shared Server
+
+**Purpose:**
+Allow Cell Ranger to be executed from any directory.
 
 > This command must be executed again after each new login session.
 
@@ -38,13 +41,21 @@ tar -xzvf refdata-gex-GRCh38-2024-A.tar.gz
 export PATH=/DATA/cfam000*/cellranger-10.0.0:$PATH
 ```
 ---
-## 4. Verify Installation
+## 3. Verify Installation
+**Environment:** Shared Server
+
+**Purpose:**
+Confirm that Cell Ranger is installed correctly.
 
 ```bash
 cellranger testrun --id=check_install
 ```
 ---
-## 5. Download Example Dataset
+## 4. Download Example Dataset
+**Environment:** Shared Server
+
+**Purpose:**
+Download public single-cell RNA-seq FASTQ files.
 
 Browse available datasets:
 
@@ -59,7 +70,7 @@ wget https://cf.10xgenomics.com/samples/cell-exp/9.0.0/5k_Human_Donor1_PBMC_3p_g
 wget https://cf.10xgenomics.com/samples/cell-exp/9.0.0/5k_Human_Donor2_PBMC_3p_gem-x_Multiplex/5k_Human_Donor2_PBMC_3p_gem-x_Multiplex_fastqs.tar
 ```
 ---
-## 6. Extract FASTQ Files
+Extract FASTQ Files
 
 ```bash
 tar -xvf 5k_Human_Donor1_PBMC_3p_gem-x_Multiplex_fastqs.tar
@@ -68,7 +79,12 @@ tar -xvf 5k_Human_Donor1_PBMC_3p_gem-x_Multiplex_fastqs.tar
 tar -xvf 5k_Human_Donor2_PBMC_3p_gem-x_Multiplex_fastqs.tar
 ```
 ---
-## 7. Run Cell Ranger Count
+## 5. Run Cell Ranger Count
+**Environment:** Shared Server
+
+**Purpose:**
+Generate the gene expression count matrix.
+
 
 ```bash
 cellranger count \
@@ -101,7 +117,11 @@ cellranger count \
 
 ---
 
-## 8. Download Results to Local Computer
+## 6. Download Results to Local Computer
+**Environment:** Local Computer
+
+**Purpose:**
+Copy Cell Ranger results from the shared server to your computer.
 
 Open a new PowerShell or Terminal window and run:
 
@@ -114,7 +134,11 @@ scp -r cfam000*@133.41.125.54:/DATA/cfam000*/donor2/outs/ donor2
 
 ---
 
-## 9. Review QC Metrics
+## 7. Review QC Metrics
+**Environment:** Local Computer
+
+**Purpose:**
+Inspect Cell Ranger quality control metrics.
 
 Open:
 
