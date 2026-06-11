@@ -7,9 +7,8 @@
 **Purpose:**
 Download Cell Ranger and the human reference dataset.
 
-Open the Cell Ranger download page:
-
-[Downloads](https://www.10xgenomics.com/support/jp/software/cell-ranger/downloads?utm_source=chatgpt.com#download-links)
+Open the Cell Ranger [Downloads](https://www.10xgenomics.com/support/jp/software/cell-ranger/downloads?utm_source=chatgpt.com#download-links)
+ page
 
 ### Cell Ranger 10.0.0
 1. Under **"tar.gz compression"**, Select the **wget** tab.
