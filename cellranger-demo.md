@@ -1,4 +1,5 @@
 # Cell Ranger Test Run Tutorial
+Before starting this tutorial, log in to the shared server via SSH.
 
 ## 1. Download Cell Ranger & Reference
 
