@@ -2,6 +2,11 @@
 
 ## 1. Download Cell Ranger & Reference
 
+**Environment:** Shared Server
+
+**Purpose:**
+Download Cell Ranger and the human reference dataset.
+
 Open the Cell Ranger download page:
 
 [Downloads](https://www.10xgenomics.com/support/jp/software/cell-ranger/downloads?utm_source=chatgpt.com#download-links)
