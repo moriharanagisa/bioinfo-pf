@@ -1,5 +1,5 @@
 # Cell Ranger Test Run Tutorial
-This tutorial demonstrates how to download publicly available single-cell RNA-seq data from two PBMC samples, process the FASTQ files with Cell Ranger to generate gene expression count matrices, and transfer the results to your local computer.
+This tutorial demonstrates how to download publicly available single-cell RNA-seq data from two PBMC samples, process the FASTQ files with Cell Ranger software to generate gene expression count matrices, and transfer the results to your local computer.
 
 Before starting this tutorial, log in to the shared server via SSH.
 
