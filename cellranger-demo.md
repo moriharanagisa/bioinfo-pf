@@ -46,8 +46,8 @@ cellranger testrun --id=check_install
 
 ## 4. Download Example Dataset
 
-10x Genomics public datasets can be browsed [here](https://www.10xgenomics.com/datasets?sort=publishedAt+DESC)
-For this tutorial, we will use the PBMC 5K dataset as an example.
+10x Genomics public datasets can be browsed [here](https://www.10xgenomics.com/datasets?sort=publishedAt+DESC)<br>
+For this tutorial, we will use the PBMC 5K dataset as an example.<br>
 
 dowmload the [donor1](https://www.10xgenomics.com/datasets/5k_Human_Donor1_PBMC_3p_gem-x) raw data
 ```bash
