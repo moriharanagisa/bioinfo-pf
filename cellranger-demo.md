@@ -3,11 +3,6 @@ Before starting this tutorial, log in to the shared server via SSH.
 
 ## 1. Download Cell Ranger & Reference
 
-**Environment:** Shared Server
-
-**Purpose:**
-Download Cell Ranger and the human reference dataset.
-
 Open the Cell Ranger [Downloads](https://www.10xgenomics.com/support/jp/software/cell-ranger/downloads?utm_source=chatgpt.com#download-links)
  page
 
@@ -30,7 +25,6 @@ tar -xzvf refdata-gex-GRCh38-2024-A.tar.gz
 ```
 ---
 ## 2. Add Cell Ranger to PATH
-**Environment:** Shared Server
 
 **Purpose:**
 Allow Cell Ranger to be executed from any directory.
@@ -42,20 +36,12 @@ export PATH=/DATA/cfam000*/cellranger-10.0.0:$PATH
 ```
 ---
 ## 3. Verify Installation
-**Environment:** Shared Server
-
-**Purpose:**
-Confirm that Cell Ranger is installed correctly.
 
 ```bash
 cellranger testrun --id=check_install
 ```
 ---
 ## 4. Download Example Dataset
-**Environment:** Shared Server
-
-**Purpose:**
-Download public single-cell RNA-seq FASTQ files.
 
 Browse available datasets:
 
@@ -80,7 +66,6 @@ tar -xvf 5k_Human_Donor2_PBMC_3p_gem-x_Multiplex_fastqs.tar
 ```
 ---
 ## 5. Run Cell Ranger Count
-**Environment:** Shared Server
 
 **Purpose:**
 Generate the gene expression count matrix.
@@ -120,9 +105,6 @@ cellranger count \
 ## 6. Download Results to Local Computer
 **Environment:** Local Computer
 
-**Purpose:**
-Copy Cell Ranger results from the shared server to your computer.
-
 Open a new PowerShell or Terminal window and run:
 
 ```bash
@@ -136,9 +118,6 @@ scp -r cfam000*@133.41.125.54:/DATA/cfam000*/donor2/outs/ donor2
 
 ## 7. Review QC Metrics
 **Environment:** Local Computer
-
-**Purpose:**
-Inspect Cell Ranger quality control metrics.
 
 Open:
 
