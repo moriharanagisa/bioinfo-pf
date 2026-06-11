@@ -24,6 +24,7 @@ tar -xzvf cellranger-10.0.0.tar.gz
 tar -xzvf refdata-gex-GRCh38-2024-A.tar.gz
 ```
 ---
+
 ## 2. Add Cell Ranger to PATH
 
 **Purpose:**
@@ -35,12 +36,14 @@ Allow Cell Ranger to be executed from any directory.
 export PATH=/DATA/cfam000*/cellranger-10.0.0:$PATH
 ```
 ---
+
 ## 3. Verify Installation
 
 ```bash
 cellranger testrun --id=check_install
 ```
 ---
+
 ## 4. Download Example Dataset
 
 10x Genomics public datasets can be browsed [here](https://www.10xgenomics.com/datasets?sort=publishedAt+DESC)
@@ -55,7 +58,7 @@ wget https://cf.10xgenomics.com/samples/cell-exp/9.0.0/5k_Human_Donor1_PBMC_3p_g
 ```bash
 wget https://cf.10xgenomics.com/samples/cell-exp/9.0.0/5k_Human_Donor2_PBMC_3p_gem-x_Multiplex/5k_Human_Donor2_PBMC_3p_gem-x_Multiplex_fastqs.tar
 ```
----
+
 Extract FASTQ Files
 
 ```bash
@@ -65,6 +68,7 @@ tar -xvf 5k_Human_Donor1_PBMC_3p_gem-x_Multiplex_fastqs.tar
 tar -xvf 5k_Human_Donor2_PBMC_3p_gem-x_Multiplex_fastqs.tar
 ```
 ---
+
 ## 5. Run Cell Ranger Count
 
 **Purpose:**
