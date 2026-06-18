@@ -19,7 +19,11 @@ done
 ---
 
 ## 2. Alignment: STAR
-
+```bash
+# Download reference files
+wget https://ftp.ensembl.org/pub/current/fasta/mus_musculus/dna/Mus_musculus.GRCm39.dna.primary_assembly.fa.gz
+wget https://ftp.ensembl.org/pub/current/gtf/mus_musculus/Mus_musculus.GRCm39.116.gtf.gz
+```
 ```bash
 cd ../STAR
 
