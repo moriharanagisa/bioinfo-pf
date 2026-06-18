@@ -31,7 +31,8 @@ The following examples assume that the FASTQ files have the `.fq.gz` extension.
 micromamba install -c conda-forge -c bioconda trim-galore
 
 trim_galore --version
-
+```
+```bash
 cd fastq
 
 for r1 in *_1.fq.gz; do
