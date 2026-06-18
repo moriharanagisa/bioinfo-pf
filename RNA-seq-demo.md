@@ -29,7 +29,7 @@ The following examples assume that the FASTQ files have the `.fq.gz` extension.
 
 ```bash
 micromamba install -c conda-forge -c bioconda trim-galore
-
+# check version
 trim_galore --version
 ```
 ```bash
@@ -45,7 +45,7 @@ done
 
 ## 2. Alignment: STAR
 ```bash
-# Download reference files
+# download reference files
 cd ../ref
 wget https://ftp.ensembl.org/pub/current/fasta/mus_musculus/dna/Mus_musculus.GRCm39.dna.primary_assembly.fa.gz
 wget https://ftp.ensembl.org/pub/current/gtf/mus_musculus/Mus_musculus.GRCm39.116.gtf.gz
@@ -120,12 +120,37 @@ done
 ## 4. DESeq2
 
 > Run in the STAR directory. Prepare `sample2condition.txt` (tab-separated) and `target2gene.txt` beforehand.
+```bash
+micromamba create -n rnaseq \
+  -c conda-forge \
+  -c bioconda \
+  r-base \
+  bioconductor-deseq2 \
+  bioconductor-tximport \
+  r-ggplot2 \
+  r-ggrepel \
+  r-dplyr \
+  r-pheatmap \
+  r-rcolorbrewer \
+  bioconductor-topgo \
+  bioconductor-org.mm.eg.db \
+  bioconductor-clusterprofiler \
+  bioconductor-enrichplot \
+  bioconductor-rgraphviz \
+  graphviz
 
+micromamba activate rnaseq
+
+R
+```
 ```r
 library(DESeq2)
 library(tximport)
-library(ggplot2)
-library(ggrepel)
+library(topGO)
+library(clusterProfiler)
+library(org.Mm.eg.db)
+library(enrichplot)
+library(Rgraphviz)
 
 # Load metadata and gene ID mapping table
 s2c <- read.table("sample2condition.txt", header = TRUE, sep = "\t", stringsAsFactors = FALSE)
@@ -197,8 +222,6 @@ for (pair in conditions) {
 ## 6. Filter DEGs (|log2FC| ≥ 1, padj < 0.05)
 
 ```r
-library(dplyr)
-
 for (input_file in list.files(pattern = "-vs-.*\\.result\\.txt$")) {
   read.table(input_file, header = TRUE, sep = "\t", stringsAsFactors = FALSE) %>%
     filter(abs(log2FoldChange) >= log2(2), padj < 0.05) %>%
@@ -211,9 +234,6 @@ for (input_file in list.files(pattern = "-vs-.*\\.result\\.txt$")) {
 ## 7. Sample Clustering Heatmap & PCA
 
 ```r
-library(RColorBrewer)
-library(pheatmap)
-
 # Variance stabilizing transformation
 vsd <- vst(dds, blind = FALSE)
 
@@ -290,12 +310,6 @@ for (file in list.files(pattern = "^filtered_.*\\.result\\.txt$")) {
 ## 9. topGO (BP / CC / MF)
 
 ```r
-library(topGO)
-library(org.Mm.eg.db)
-library(ggplot2)
-library(stringr)
-library(Rgraphviz)
-
 all_genes <- rownames(dds)
 
 for (file in list.files(pattern = "^filtered_.*\\.result\\.txt$")) {
@@ -379,11 +393,6 @@ for (file in list.files(pattern = "^filtered_.*\\.result\\.txt$")) {
 ## 10. clusterProfiler: GO + KEGG + GSEA
 
 ```r
-library(clusterProfiler)
-library(org.Mm.eg.db)
-library(enrichplot)
-library(ggplot2)
-
 for (file in list.files(pattern = "^filtered_.*\\.result\\.txt$")) {
   comparison      <- gsub("^filtered_(.*)\\.result\\.txt$", "\\1", file)
   comparison_safe <- gsub("-", "_", comparison)
