@@ -119,7 +119,20 @@ done
 
 ## 4. DESeq2
 
-> Run in the STAR directory. Prepare `sample2condition.txt` (tab-separated) and `target2gene.txt` beforehand.
+> Run in the STAR directory. Prepare `sample2condition.txt` (tab-separated) beforehand.
+> # Prepare sample metadata
+
+Prepare `sample2condition.txt` before running DESeq2.
+
+```text
+sample	group	path
+Ctrl1	Ctrl	Ctrl1.genes.results
+Ctrl2	Ctrl	Ctrl2.genes.results
+Ctrl3	Ctrl	Ctrl3.genes.results
+Target1	Target	Target1.genes.results
+Target2	Target	Target2.genes.results
+Target3	Target	Target3.genes.results
+
 ```bash
 micromamba create -n rnaseq \
   -c conda-forge \
@@ -127,6 +140,7 @@ micromamba create -n rnaseq \
   r-base \
   bioconductor-deseq2 \
   bioconductor-tximport \
+  bioconductor-biomart \
   r-ggplot2 \
   r-ggrepel \
   r-dplyr \
@@ -144,6 +158,7 @@ micromamba activate rnaseq
 R
 ```
 ```r
+library(biomaRt)
 library(DESeq2)
 library(tximport)
 library(topGO)
@@ -151,6 +166,13 @@ library(clusterProfiler)
 library(org.Mm.eg.db)
 library(enrichplot)
 library(Rgraphviz)
+
+# retrieve gene ID-to-gene name mappings
+ensembl = biomaRt::useEnsembl(biomart="ensembl")
+biomaRt::listDatasets(ensembl)
+mart <- useEnsembl(biomart = "genes", dataset = "mmusculus_gene_ensembl")
+t2g <- getBM(attributes = c("ensembl_transcript_id", "ensembl_gene_id", "external_gene_name"), mart = mart)
+write.table(t2g,"target2gene.txt", sep="\t",quote=F,row.names=F)
 
 # Load metadata and gene ID mapping table
 s2c <- read.table("sample2condition.txt", header = TRUE, sep = "\t", stringsAsFactors = FALSE)
