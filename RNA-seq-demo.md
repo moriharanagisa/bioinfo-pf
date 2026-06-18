@@ -3,16 +3,15 @@
 Before starting this tutorial, log in to the shared server via SSH.
 
 
-## 1. Preprocessing: TrimGalore
+## 1. TrimGalore
 
 ```bash
-# Place fastq files in /DATA/centos/RNAseq/fastq
-cd /DATA/centos/RNAseq/fastq
-sudo cp /mnt/add2/*/*.fq .
+micromamba install -c conda-forge -c bioconda trim-galore
 
-# docker attach trimgalore-0.6.10
-for r1 in *_1.fq; do
-  r2="${r1/_1.fq/_2.fq}"
+trim_galore --version
+
+for r1 in *_1.fq.gz; do
+  r2="${r1/_1.fq.gz/_2.fq.gz}"
   trim_galore --paired "$r1" "$r2"
 done
 ```
