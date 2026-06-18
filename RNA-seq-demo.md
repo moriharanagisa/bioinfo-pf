@@ -121,6 +121,7 @@ done
 
 > Run in the STAR directory. Prepare `sample2condition.txt` (tab-separated) beforehand.
 ```text
+# sample2condition.txt
 sample	group	path
 Ctrl1	Ctrl	Ctrl1.genes.results
 Ctrl2	Ctrl	Ctrl2.genes.results
