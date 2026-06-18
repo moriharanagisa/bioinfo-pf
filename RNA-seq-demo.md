@@ -51,16 +51,31 @@ wget https://ftp.ensembl.org/pub/current/fasta/mus_musculus/dna/Mus_musculus.GRC
 wget https://ftp.ensembl.org/pub/current/gtf/mus_musculus/Mus_musculus.GRCm39.116.gtf.gz
 ```
 ```bash
+# install STAR
+cd ../
+wget https://github.com/alexdobin/STAR/archive/2.7.11b.tar.gz
+tar -xzf 2.7.11b.tar.gz
+```
+```bash
+# make index
+cd ref
+mkdir STAR_reference_mouse
+../STAR-2.7.11b/bin/Linux_x86_64/STAR --runMode genomeGenerate \
+                                      --genomeDir STAR_reference_mouse
+                                      --genomeFastaFiles Mus_musculus.GRCm39.dna.primary_assembly.fa \
+                                      --sjdbGTFfile Mus_musculus.GRCm39.116.gtf
+```
+```bash
 cd ../STAR
 
-for fq1 in ../fastq/*_1_val_1.fq; do
-  sample=$(basename "$fq1" | sed 's/_1_val_1\.fq//')
-  echo "mapping: ${sample}"
+for fq1 in ../fastq/*_1_val_1.fq.gz; do
+  sample=$(basename "$fq1" | sed 's/_1_val_1\.fq\.gz//')
   ../STAR-2.7.0a/bin/Linux_x86_64/STAR \
     --runMode alignReads \
     --genomeDir ../ref/STAR_reference_mouse \
-    --readFilesIn ../fastq/${sample}_1_val_1.fq \
-                  ../fastq/${sample}_2_val_2.fq \
+    --readFilesIn ../fastq/${sample}_1_val_1.fq.gz \
+                  ../fastq/${sample}_2_val_2.fq.gz \
+    --readFilesCommand zcat \
     --outSAMtype BAM SortedByCoordinate \
     --runThreadN 128 \
     --quantMode TranscriptomeSAM \
@@ -73,8 +88,8 @@ done
 ## 3. Quantification: RSEM
 
 ```bash
-for fq1 in ../fastq/*_1_val_1.fq; do
-  sample=$(basename "$fq1" | sed 's/_1_val_1\.fq//')
+for fq1 in ../fastq/*_1_val_1.fq.gz; do
+  sample=$(basename "$fq1" | sed 's/_1_val_1\.fq\.gz//')
   ../RSEM-1.3.3/rsem-calculate-expression \
     --num-threads 128 \
     --paired-end \
