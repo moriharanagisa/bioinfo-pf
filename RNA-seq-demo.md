@@ -23,6 +23,9 @@ RNAseq/
 
 
 ## 1. TrimGalore
+Place the FASTQ files in the `fastq` directory.
+
+The following examples assume that the FASTQ files have the `.fq.gz` extension.
 
 ```bash
 micromamba install -c conda-forge -c bioconda trim-galore
