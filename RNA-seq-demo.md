@@ -120,10 +120,6 @@ done
 ## 4. DESeq2
 
 > Run in the STAR directory. Prepare `sample2condition.txt` (tab-separated) beforehand.
-> # Prepare sample metadata
-
-Prepare `sample2condition.txt` before running DESeq2.
-
 ```text
 sample	group	path
 Ctrl1	Ctrl	Ctrl1.genes.results
@@ -132,7 +128,7 @@ Ctrl3	Ctrl	Ctrl3.genes.results
 Target1	Target	Target1.genes.results
 Target2	Target	Target2.genes.results
 Target3	Target	Target3.genes.results
-
+```
 ```bash
 micromamba create -n rnaseq \
   -c conda-forge \
