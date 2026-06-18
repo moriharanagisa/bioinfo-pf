@@ -29,6 +29,8 @@ micromamba install -c conda-forge -c bioconda trim-galore
 
 trim_galore --version
 
+cd fastq
+
 for r1 in *_1.fq.gz; do
   r2="${r1/_1.fq.gz/_2.fq.gz}"
   trim_galore --paired "$r1" "$r2"
