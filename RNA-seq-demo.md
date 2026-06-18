@@ -86,7 +86,11 @@ done
 ---
 
 ## 3. Quantification: RSEM
-
+```bash
+# install RSEM
+wget https://github.com/deweylab/RSEM/archive/v1.3.3.tar.gz
+tar -zxvf v1.3.3.tar.gz
+```
 ```bash
 for fq1 in ../fastq/*_1_val_1.fq.gz; do
   sample=$(basename "$fq1" | sed 's/_1_val_1\.fq\.gz//')
