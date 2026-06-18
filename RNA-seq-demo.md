@@ -1,4 +1,5 @@
 # RNA-seq Analysis Pipeline
+Before starting this tutorial, log in to the shared server via SSH.
 ---
 
 ## 1. Preprocessing: TrimGalore
