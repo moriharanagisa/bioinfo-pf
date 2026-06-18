@@ -24,7 +24,7 @@
 micromamba self-update
 ```
 ```bash
-echo 'export PATH=/DATA/cfam0001/micromamba/bin:$PATH' >> ~/.bashrc
+echo 'export PATH=/DATA/cfam000*/micromamba/bin:$PATH' >> ~/.bashrc
 source ~/.bashrc
 ```
 ## 2. Create Seurat Environment
