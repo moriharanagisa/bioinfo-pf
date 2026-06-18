@@ -1,6 +1,25 @@
 # RNA-seq Analysis Pipeline
 
 Before starting this tutorial, log in to the shared server via SSH.
+## 0. Create directories
+
+Create an RNAseq project directory and subdirectories for FASTQ files, STAR output, and reference files.
+
+```bash
+mkdir RNAseq
+cd RNAseq
+
+mkdir fastq STAR ref
+```
+
+Directory structure:
+
+```text
+RNAseq/
+├── fastq/
+├── STAR/
+└── ref/
+```
 
 
 ## 1. TrimGalore
