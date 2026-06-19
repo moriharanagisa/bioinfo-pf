@@ -193,7 +193,7 @@ dds <- DESeq(dds)
 
 ```r
 # Define comparison pairs
-conditions <- list(c("LK", "Ctrl"))
+conditions <- list(c("Target", "Ctrl"))
 
 for (pair in conditions) {
   cond1 <- pair[1]
