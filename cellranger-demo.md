@@ -76,22 +76,26 @@ Generate the gene expression count matrix.
 
 
 ```bash
-cellranger count \
+# Use nohup to keep the job running after the SSH session is disconnected.
+nohup cellranger count \
     --id=donor1 \
     --transcriptome=refdata-gex-GRCh38-2024-A \
     --fastqs=5k_Human_Donor1_PBMC_3p_gem-x_GEX_fastqs \
     --create-bam=false \
     --localcores=32 \
-    --localmem=128
+    --localmem=128 \
+&
 ```
 ```bash
-cellranger count \
+# Use nohup to keep the job running after the SSH session is disconnected.
+nohup cellranger count \
     --id=donor2 \
     --transcriptome=refdata-gex-GRCh38-2024-A \
     --fastqs=5k_Human_Donor2_PBMC_3p_gem-x_GEX_fastqs \
     --create-bam=false \
     --localcores=32 \
-    --localmem=128
+    --localmem=128 \
+&
 ```
 ### Parameters
 
