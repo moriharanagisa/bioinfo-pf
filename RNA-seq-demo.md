@@ -58,16 +58,18 @@ tar -xzf 2.7.11b.tar.gz
 
 # make index
 cd ref
+
 mkdir STAR_reference_mouse
-../STAR-2.7.11b/bin/Linux_x86_64/STAR --runMode genomeGenerate \
-                                      --genomeDir STAR_reference_mouse
-                                      --genomeFastaFiles Mus_musculus.GRCm39.dna.primary_assembly.fa \
-                                      --sjdbGTFfile Mus_musculus.GRCm39.116.gtf
+
+../STAR-2.7.11b/source/STAR \
+    --runMode genomeGenerate \
+    --genomeDir STAR_reference_mouse \
+    --genomeFastaFiles Mus_musculus.GRCm39.dna.primary_assembly.fa \
+    --sjdbGTFfile Mus_musculus.GRCm39.116.gtf
 ```
 ```bash
 cd ../STAR
 
-(
 for fq1 in ../fastq/*.trim.R1.fq.gz; do
   sample=$(basename "$fq1" | sed 's/.trim.R1\.fq\.gz//')
   ../STAR-2.7.11b/source/STAR \
@@ -77,13 +79,10 @@ for fq1 in ../fastq/*.trim.R1.fq.gz; do
                   ../fastq/${sample}.trim.R2.fq.gz \
     --readFilesCommand zcat \
     --outSAMtype BAM SortedByCoordinate \
-    --runThreadN 128 \
+    --runThreadN 64 \
     --quantMode TranscriptomeSAM \
     --outFileNamePrefix ${sample}.
-done
-) > star_align.log 2>&1 &
-
-disown
+done &
 ```
 
 ---
