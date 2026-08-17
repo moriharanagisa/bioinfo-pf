@@ -22,23 +22,22 @@ RNAseq/
 ```
 
 
-## 1. TrimGalore
+## 1. fastp
 Place the FASTQ files in the `fastq` directory.
 
 The following examples assume that the FASTQ files have the `.fq.gz` extension.
 
 ```bash
-micromamba install -c conda-forge -c bioconda trim-galore
-# check version
-trim_galore --version
-```
-```bash
 cd fastq
 
-for r1 in *_1.fq.gz; do
-  r2="${r1/_1.fq.gz/_2.fq.gz}"
-  trim_galore --paired "$r1" "$r2"
-done
+parallel -j 8 '
+    fastp \
+      -i {} \
+      -I {=s/_1/_2/=} \
+      -o {.}.trim.R1.fq.gz \
+      -O {.}.trim.R2.fq.gz \
+      -w 8
+' ::: ./*_1.fq.gz
 ```
 
 ---
