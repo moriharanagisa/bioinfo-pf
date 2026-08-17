@@ -69,7 +69,7 @@ cd ../STAR
 
 for fq1 in ../fastq/*.trim.R1.fq.gz; do
   sample=$(basename "$fq1" | sed 's/.trim.R1\.fq\.gz//')
-  ../STAR-2.7.0a/bin/Linux_x86_64/STAR \
+  ../STAR-2.7.11b/bin/Linux_x86_64/STAR \
     --runMode alignReads \
     --genomeDir ../ref/STAR_reference_mouse \
     --readFilesIn ../fastq/${sample}.trim.R1.fq.gz \
