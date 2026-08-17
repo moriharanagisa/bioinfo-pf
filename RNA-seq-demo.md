@@ -32,13 +32,15 @@ cd fastq
 docker attach centos-DATA
 
 parallel -j 8 '
+    sample={=s/_1\.fq\.gz$//=}
     fastp \
       -i {} \
       -I {=s/_1/_2/=} \
-      -o {.}.trim.R1.fq.gz \
-      -O {.}.trim.R2.fq.gz \
-      -w 8
-' ::: ./*_1.fq.gz
+      -o ${sample}.trim.R1.fq.gz \
+      -O ${sample}.trim.R2.fq.gz \
+      -w 64 \
+      --detect_adapter_for_pe
+' ::: ./*_1.fq.gz &
 ```
 
 ---
@@ -98,7 +100,7 @@ tar -zxvf v1.3.3.tar.gz
 # make index
 cd ref
 mkdir RSEM_reference_mouse
-../RSEM-1.3.3/rsem-prepare-reference --num-threads 128 \
+../RSEM-1.3.3/rsem-prepare-reference --num-threads 64 \
                                      --gtf Mus_musculus.GRCm39.116.gtf \
                                      Mus_musculus.GRCm39.dna.primary_assembly.fa \
                                      RSEM_reference_mouse/RSEM_reference_mouse
