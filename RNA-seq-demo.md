@@ -90,12 +90,12 @@ disown
 
 ## 3. Quantification: RSEM
 ```bash
+# first run only
 # install RSEM
 cd ../
 wget https://github.com/deweylab/RSEM/archive/v1.3.3.tar.gz
 tar -zxvf v1.3.3.tar.gz
-```
-```bash
+
 # make index
 cd ref
 mkdir RSEM_reference_mouse
