@@ -29,6 +29,7 @@ The following examples assume that the FASTQ files have the `.fq.gz` extension.
 
 ```bash
 cd fastq
+docker attach centos-DATA
 
 parallel -j 8 '
     fastp \
