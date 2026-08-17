@@ -67,13 +67,13 @@ mkdir STAR_reference_mouse
 ```bash
 cd ../STAR
 
-for fq1 in ../fastq/*_1_val_1.fq.gz; do
-  sample=$(basename "$fq1" | sed 's/_1_val_1\.fq\.gz//')
+for fq1 in ../fastq/*.trim.R1.fq.gz; do
+  sample=$(basename "$fq1" | sed 's/.trim.R1\.fq\.gz//')
   ../STAR-2.7.0a/bin/Linux_x86_64/STAR \
     --runMode alignReads \
     --genomeDir ../ref/STAR_reference_mouse \
-    --readFilesIn ../fastq/${sample}_1_val_1.fq.gz \
-                  ../fastq/${sample}_2_val_2.fq.gz \
+    --readFilesIn ../fastq/${sample}.trim.R1.fq.gz \
+                  ../fastq/${sample}.trim.R2.fq.gz \
     --readFilesCommand zcat \
     --outSAMtype BAM SortedByCoordinate \
     --runThreadN 128 \
