@@ -45,18 +45,17 @@ parallel -j 8 '
 
 ## 2. Alignment: STAR
 ```bash
+# first run only
 # download reference files
 cd ../ref
 wget https://ftp.ensembl.org/pub/current/fasta/mus_musculus/dna/Mus_musculus.GRCm39.dna.primary_assembly.fa.gz
 wget https://ftp.ensembl.org/pub/current/gtf/mus_musculus/Mus_musculus.GRCm39.116.gtf.gz
-```
-```bash
+
 # install STAR
 cd ../
 wget https://github.com/alexdobin/STAR/archive/2.7.11b.tar.gz
 tar -xzf 2.7.11b.tar.gz
-```
-```bash
+
 # make index
 cd ref
 mkdir STAR_reference_mouse
