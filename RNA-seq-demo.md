@@ -107,8 +107,8 @@ mkdir RSEM_reference_mouse
 ```bash
 cd STAR
 
-for fq1 in ../fastq/*_1_val_1.fq.gz; do
-  sample=$(basename "$fq1" | sed 's/_1_val_1\.fq\.gz//')
+for fq1 in ../fastq/*.trim.R1.fq.gz; do
+  sample=$(basename "$fq1" | sed 's/.trim.R1\.fq\.gz//')
   ../RSEM-1.3.3/rsem-calculate-expression \
     --num-threads 128 \
     --paired-end \
