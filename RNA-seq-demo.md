@@ -134,6 +134,7 @@ Target2	Target	Target2.genes.results
 Target3	Target	Target3.genes.results
 ```
 ```bash
+# first run only
 micromamba create -n rnaseq \
   -c conda-forge \
   -c bioconda \
@@ -152,9 +153,9 @@ micromamba create -n rnaseq \
   bioconductor-enrichplot \
   bioconductor-rgraphviz \
   graphviz
-
+```
+```bash
 micromamba activate rnaseq
-
 R
 ```
 ```r
