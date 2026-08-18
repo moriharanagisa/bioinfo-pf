@@ -111,12 +111,12 @@ cd STAR
 for fq1 in ../fastq/*.trim.R1.fq.gz; do
   sample=$(basename "$fq1" | sed 's/.trim.R1\.fq\.gz//')
   ../RSEM-1.3.3/rsem-calculate-expression \
-    --num-threads 128 \
+    --num-threads 64 \
     --paired-end \
     --bam "${sample}.Aligned.toTranscriptome.out.bam" \
     ../ref/RSEM_reference_mouse/RSEM_reference_mouse \
     "${sample}"
-done
+done &
 ```
 
 ---
