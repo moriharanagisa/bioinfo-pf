@@ -169,7 +169,13 @@ library(org.Mm.eg.db)
 library(enrichplot)
 library(Rgraphviz)
 
-# retrieve gene ID-to-gene name mappings
+# first run only
+if (!require("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("biomaRt")
+
+# retrieve gene ID-to-gene name mappings (first run only)
 ensembl = biomaRt::useEnsembl(biomart="ensembl")
 biomaRt::listDatasets(ensembl)
 mart <- useEnsembl(biomart = "genes", dataset = "mmusculus_gene_ensembl")
