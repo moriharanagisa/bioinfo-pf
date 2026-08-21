@@ -160,12 +160,6 @@ micromamba activate rnaseq
 R
 ```
 ```r
-# first run only
-if (!require("BiocManager", quietly = TRUE))
-    install.packages("BiocManager")
-
-BiocManager::install("biomaRt")
-
 # load packages
 library(biomaRt)
 library(DESeq2)
