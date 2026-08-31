@@ -418,62 +418,229 @@ for (file in list.files(pattern = "^filtered_.*\\.result\\.txt$")) {
 ## 10. clusterProfiler: GO + KEGG + GSEA
 
 ```r
+library(clusterProfiler)
+library(org.Mm.eg.db)
+library(ggplot2)
+
 for (file in list.files(pattern = "^filtered_.*\\.result\\.txt$")) {
-  comparison      <- gsub("^filtered_(.*)\\.result\\.txt$", "\\1", file)
+
+  comparison <- gsub("^filtered_(.*)\\.result\\.txt$", "\\1", file)
   comparison_safe <- gsub("-", "_", comparison)
+
   message("Processing: ", comparison)
 
-  deg <- read.table(file, header = TRUE, sep = "\t", stringsAsFactors = FALSE)
-  if (nrow(deg) == 0) { message("No significant genes. Skipping."); next }
+  deg <- read.table(
+    file,
+    header = TRUE,
+    sep = "\t",
+    stringsAsFactors = FALSE
+  )
 
-  # Ensembl → Entrez ID conversion
-  gene_ids <- bitr(deg$ensembl_gene_id, fromType = "ENSEMBL",
-                   toType = "ENTREZID", OrgDb = org.Mm.eg.db)
-  if (nrow(gene_ids) == 0) { message("ID conversion failed. Skipping."); next }
+  if (nrow(deg) == 0) {
+    message("No significant genes. Skipping.")
+    next
+  }
+
+  gene_ids <- bitr(
+    deg$ensembl_gene_id,
+    fromType = "ENSEMBL",
+    toType = "ENTREZID",
+    OrgDb = org.Mm.eg.db
+  )
+
+  if (nrow(gene_ids) == 0) {
+    message("ID conversion failed. Skipping.")
+    next
+  }
+
   message(nrow(gene_ids), " genes converted")
 
-  # Helper: save result table + dotplot (+barplot if requested)
-  save_enrich <- function(obj, prefix, barplot = FALSE) {
-    if (is.null(obj) || nrow(obj@result) == 0) return(invisible(NULL))
-    write.table(obj@result, paste0(prefix, ".txt"), sep = "\t", quote = FALSE, row.names = FALSE)
-    ggsave(paste0(prefix, "_dotplot.png"),
-           dotplot(obj, showCategory = 20) + ggtitle(basename(prefix)),
-           width = 10, height = 8, dpi = 300)
-    if (barplot)
-      ggsave(paste0(prefix, "_barplot.png"),
-             barplot(obj, showCategory = 20) + ggtitle(basename(prefix)),
-             width = 10, height = 8, dpi = 300)
-    message("  Done: ", basename(prefix), " (", nrow(obj@result), " terms)")
+  save_enrich <- function(obj, prefix, make_barplot = FALSE) {
+
+    if (is.null(obj) || nrow(obj@result) == 0) {
+      message("  No enriched terms: ", basename(prefix))
+      return(invisible(NULL))
+    }
+
+    # Save result table
+    write.table(
+      obj@result,
+      paste0(prefix, ".txt"),
+      sep = "\t",
+      quote = FALSE,
+      row.names = FALSE
+    )
+
+    # Dotplot
+    p_dot <- dotplot(
+      obj,
+      showCategory = 20,
+      font.size = 10,
+      label_format = 40
+    ) +
+      ggtitle(basename(prefix)) +
+      theme(
+        plot.title = element_text(hjust = 0.5),
+        axis.text.y = element_text(size = 9)
+      )
+
+    ggsave(
+      paste0(prefix, "_dotplot.png"),
+      plot = p_dot,
+      width = 12,
+      height = 10,
+      dpi = 300
+    )
+
+    # Barplot
+    if (make_barplot) {
+
+      p_bar <- barplot(
+        obj,
+        showCategory = 20,
+        font.size = 10,
+        label_format = 40
+      ) +
+        ggtitle(basename(prefix)) +
+        theme(
+          plot.title = element_text(hjust = 0.5),
+          axis.text.y = element_text(size = 9)
+        )
+
+      ggsave(
+        paste0(prefix, "_barplot.png"),
+        plot = p_bar,
+        width = 12,
+        height = 10,
+        dpi = 300
+      )
+    }
+
+    message(
+      "  Done: ",
+      basename(prefix),
+      " (",
+      nrow(obj@result),
+      " terms)"
+    )
   }
 
-  # GO enrichment (BP / MF / CC)
+
+  ## GO enrichment
+
   for (ont in c("BP", "MF", "CC")) {
-    ego <- enrichGO(gene = gene_ids$ENTREZID, OrgDb = org.Mm.eg.db, ont = ont,
-                    pAdjustMethod = "BH", pvalueCutoff = 0.05, qvalueCutoff = 0.2,
-                    readable = TRUE)
-    save_enrich(ego, paste0(comparison_safe, "_GO_", ont), barplot = (ont == "BP"))
+
+    ego <- enrichGO(
+      gene = gene_ids$ENTREZID,
+      OrgDb = org.Mm.eg.db,
+      ont = ont,
+      pAdjustMethod = "BH",
+      pvalueCutoff = 0.05,
+      qvalueCutoff = 0.2,
+      readable = TRUE
+    )
+
+    save_enrich(
+      ego,
+      paste0(comparison_safe, "_GO_", ont),
+      make_barplot = (ont == "BP")
+    )
   }
 
-  # KEGG enrichment
-  ekegg <- enrichKEGG(gene = gene_ids$ENTREZID, organism = "mmu",
-                      pvalueCutoff = 0.05, pAdjustMethod = "BH", qvalueCutoff = 0.2)
-  if (!is.null(ekegg) && nrow(ekegg@result) > 0)
-    ekegg <- setReadable(ekegg, OrgDb = org.Mm.eg.db, keyType = "ENTREZID")
-  save_enrich(ekegg, paste0(comparison_safe, "_KEGG"), barplot = TRUE)
 
-  # GSEA: rank genes by log2FC
-  fc_vec <- setNames(deg$log2FoldChange, deg$ensembl_gene_id)
-  fc_conv <- bitr(names(sort(fc_vec, decreasing = TRUE)),
-                  fromType = "ENSEMBL", toType = "ENTREZID", OrgDb = org.Mm.eg.db)
-  fc_list <- sort(setNames(fc_vec[fc_conv$ENSEMBL], fc_conv$ENTREZID), decreasing = TRUE)
+ ## KEGG enrichment
 
-  gsea_go <- gseGO(geneList = fc_list, OrgDb = org.Mm.eg.db, ont = "BP",
-                   pvalueCutoff = 0.05, pAdjustMethod = "BH")
-  save_enrich(gsea_go, paste0(comparison_safe, "_GSEA_GO"))
+  ekegg <- enrichKEGG(
+    gene = gene_ids$ENTREZID,
+    organism = "mmu",
+    pvalueCutoff = 0.05,
+    pAdjustMethod = "BH",
+    qvalueCutoff = 0.2
+  )
 
-  gsea_kegg <- gseKEGG(geneList = fc_list, organism = "mmu",
-                       pvalueCutoff = 0.05, pAdjustMethod = "BH")
-  save_enrich(gsea_kegg, paste0(comparison_safe, "_GSEA_KEGG"))
+  if (!is.null(ekegg) && nrow(ekegg@result) > 0) {
+    ekegg <- setReadable(
+      ekegg,
+      OrgDb = org.Mm.eg.db,
+      keyType = "ENTREZID"
+    )
+  }
+
+  save_enrich(
+    ekegg,
+    paste0(comparison_safe, "_KEGG"),
+    make_barplot = TRUE
+  )
+
+  ## GSEA
+  # Rank genes by log2FoldChange
+ 
+  fc_vec <- setNames(
+    deg$log2FoldChange,
+    deg$ensembl_gene_id
+  )
+
+  fc_vec <- fc_vec[!is.na(fc_vec)]
+
+  fc_conv <- bitr(
+    names(fc_vec),
+    fromType = "ENSEMBL",
+    toType = "ENTREZID",
+    OrgDb = org.Mm.eg.db
+  )
+
+  if (nrow(fc_conv) > 0) {
+
+    fc_list <- setNames(
+      fc_vec[fc_conv$ENSEMBL],
+      fc_conv$ENTREZID
+    )
+
+    # Remove duplicated Entrez IDs
+    fc_list <- fc_list[!duplicated(names(fc_list))]
+
+    # Sort from high to low
+    fc_list <- sort(
+      fc_list,
+      decreasing = TRUE
+    )
+
+    ## GSEA GO Biological Process
+
+    gsea_go <- gseGO(
+      geneList = fc_list,
+      OrgDb = org.Mm.eg.db,
+      ont = "BP",
+      pvalueCutoff = 0.05,
+      pAdjustMethod = "BH"
+    )
+
+    save_enrich(
+      gsea_go,
+      paste0(comparison_safe, "_GSEA_GO")
+    )
+
+    ## GSEA KEGG
+   
+    gsea_kegg <- gseKEGG(
+      geneList = fc_list,
+      organism = "mmu",
+      pvalueCutoff = 0.05,
+      pAdjustMethod = "BH"
+    )
+
+    save_enrich(
+      gsea_kegg,
+      paste0(comparison_safe, "_GSEA_KEGG")
+    )
+
+  } else {
+    message("GSEA ID conversion failed. Skipping GSEA.")
+  }
+
+
+  message("Finished: ", comparison)
+}
 
   message("Finished: ", comparison)
 }
