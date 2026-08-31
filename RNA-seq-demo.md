@@ -169,6 +169,7 @@ library(clusterProfiler)
 library(org.Mm.eg.db)
 library(enrichplot)
 library(Rgraphviz)
+library(ggplot2)
 
 # retrieve gene ID-to-gene name mappings (first run only)
 ensembl = biomaRt::useEnsembl(biomart="ensembl")
@@ -418,10 +419,6 @@ for (file in list.files(pattern = "^filtered_.*\\.result\\.txt$")) {
 ## 10. clusterProfiler: GO + KEGG + GSEA
 
 ```r
-library(clusterProfiler)
-library(org.Mm.eg.db)
-library(ggplot2)
-
 for (file in list.files(pattern = "^filtered_.*\\.result\\.txt$")) {
 
   comparison <- gsub("^filtered_(.*)\\.result\\.txt$", "\\1", file)
