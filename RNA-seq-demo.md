@@ -174,6 +174,7 @@ library(Rgraphviz)
 library(ggrepel)
 library(ggplot2)
 library(pheatmap)
+library(stringr)
 
 # retrieve gene ID-to-gene name mappings (first run only)
 ensembl = biomaRt::useEnsembl(biomart="ensembl")
