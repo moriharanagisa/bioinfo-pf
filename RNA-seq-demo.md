@@ -38,6 +38,8 @@ parallel -j 8 '
       -I {=s/_1/_2/=} \
       -o ${sample}.trim.R1.fq.gz \
       -O ${sample}.trim.R2.fq.gz \
+      -h ${sample}_fastp.html \
+      -j ${sample}_fastp.json \
       -w 64 \
       --detect_adapter_for_pe
 ' ::: ./*_1.fq.gz &
