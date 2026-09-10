@@ -171,6 +171,7 @@ library(clusterProfiler)
 library(org.Mm.eg.db)
 library(enrichplot)
 library(Rgraphviz)
+library(ggrepel)
 library(ggplot2)
 
 # retrieve gene ID-to-gene name mappings (first run only)
