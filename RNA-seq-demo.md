@@ -639,11 +639,6 @@ for (file in list.files(pattern = "^filtered_.*\\.result\\.txt$")) {
   } else {
     message("GSEA ID conversion failed. Skipping GSEA.")
   }
-
-
-  message("Finished: ", comparison)
-}
-
   message("Finished: ", comparison)
 }
 ```
