@@ -47,6 +47,23 @@ Ctrl + P, Ctrl + Q
 
 ---
 
+## Merge
+
+```bash
+for sample in $(printf '%s\n' *_1_val_1.fq.gz | cut -d'_' -f1 | sort -u)
+do
+    echo "[MERGE] $sample"
+
+    cat "${sample}"_*_1_val_1.fq.gz \
+        > "${sample}_R1.trim.fastq.gz"
+
+    cat "${sample}"_*_2_val_2.fq.gz \
+        > "${sample}_R2.trim.fastq.gz"
+done
+```
+
+---
+
 ## Alignment
 
 ```bash
